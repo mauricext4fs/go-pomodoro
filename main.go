@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
-	"time"
 )
 
 type clock struct {
-	canvas    fyne.CanvasObject
 	timeLabel *widget.Label
 	countdown countdown
 	stop      bool
@@ -56,29 +56,33 @@ func (c *clock) render() *fyne.Container {
 func (c *clock) animate(co fyne.CanvasObject) {
 	tick := time.NewTicker(time.Second)
 	go func() {
-		c.countdown.minute = 24
-		c.countdown.second = 59
+		// Easier for testing
+		//c.countdown.minute = 24
+		c.countdown.minute = 1
+		c.countdown.second = 60
 		for !c.stop {
 			c.Layout(nil, co.Size())
 			<-tick.C
 			c.countdownDown(&c.countdown)
 			c.timeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.countdown.minute, c.countdown.second))
+			fmt.Println(c.countdown.minute, " : ", c.countdown.second)
 		}
+		n := fyne.NewNotification("🍎 is over!", "🍎 is over")
+		app.New().SendNotification(n)
 	}()
 }
 
 func (c *clock) Layout(_ []fyne.CanvasObject, size fyne.Size) {
 	diameter := fyne.Min(size.Width, size.Height)
 	size = fyne.NewSize(diameter, diameter)
-	fmt.Println(c.countdown.minute, " : ", c.countdown.second)
 }
 
 func (c *clock) countdownDown(cd *countdown) {
-	if cd.minute > 0 && cd.second == 1 {
+	cd.second--
+	if cd.minute >= 1 && cd.second <= 0 {
 		cd.minute--
 		cd.second = 60
-	} else if cd.minute == 0 && cd.second <= 1 {
+	} else if cd.minute == 0 && cd.second <= 0 {
 		c.stop = true
 	}
-	cd.second--
 }
