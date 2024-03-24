@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -46,12 +45,10 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
 		if clock.stop {
-			log.Println("Starting 🍅")
 			clock.startstopButton.SetText("Pause 🍅")
 			clock.stop = false
 			go clock.animate(content)
 		} else {
-			log.Println("Pausing 🍅")
 			clock.startstopButton.SetText("Continue 🍅")
 			clock.stop = true
 		}
@@ -63,8 +60,6 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	content.Add(clock.resetButton)
 
 	clock.reset()
-	// Easier for testing
-	clock.countdown.minute = 1
 
 	return content
 }
@@ -93,7 +88,6 @@ func (c *clock) animate(co fyne.CanvasObject) {
 			<-tick.C
 			c.countdownDown(&c.countdown)
 			c.timeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.countdown.minute, c.countdown.second))
-			fmt.Println(c.countdown.minute, " : ", c.countdown.second)
 		}
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 is over!", "🍅 is over")
