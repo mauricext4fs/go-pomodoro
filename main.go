@@ -42,9 +42,6 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.timeLabel = widget.NewLabel("25 Minutes")
 	clock.timeLabel.TextStyle.Bold = true
 	clock.timeLabel.Importance = widget.HighImportance
-	clock.reset()
-	// Easier for testing
-	clock.countdown.minute = 1
 
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
@@ -61,10 +58,13 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	})
 	clock.resetButton = widget.NewButton("Reset ", func() {
 		clock.reset()
-		clock.startstopButton.SetText("Start 🍅")
 	})
 	content.Add(clock.startstopButton)
 	content.Add(clock.resetButton)
+
+	clock.reset()
+	// Easier for testing
+	clock.countdown.minute = 1
 
 	return content
 }
@@ -81,6 +81,7 @@ func (c *clock) reset() {
 	c.countdown.minute = 24
 	c.countdown.second = 60
 	c.timeLabel.SetText("25 Minutes")
+	c.startstopButton.SetText("Start 🍅")
 }
 
 func (c *clock) animate(co fyne.CanvasObject) {
