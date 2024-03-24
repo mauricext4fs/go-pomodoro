@@ -47,19 +47,24 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.countdown.minute = 1
 
 	content := clock.render()
-	clock.startstopButton = widget.NewButton("Start 🍎", func() {
+	clock.startstopButton = widget.NewButton("Start 🍅", func() {
 		if clock.stop {
-			log.Println("Starting 🍎")
-			clock.startstopButton.SetText("Stop 🍎")
+			log.Println("Starting 🍅")
+			clock.startstopButton.SetText("Pause 🍅")
 			clock.stop = false
 			go clock.animate(content)
 		} else {
-			log.Println("Stopping 🍎")
-			clock.startstopButton.SetText("Start 🍎")
+			log.Println("Pausing 🍅")
+			clock.startstopButton.SetText("Continue 🍅")
 			clock.stop = true
 		}
 	})
+	clock.resetButton = widget.NewButton("Reset ", func() {
+		clock.reset()
+		clock.startstopButton.SetText("Start 🍅")
+	})
 	content.Add(clock.startstopButton)
+	content.Add(clock.resetButton)
 
 	return content
 }
@@ -75,6 +80,7 @@ func (c *clock) reset() {
 	c.stop = true
 	c.countdown.minute = 24
 	c.countdown.second = 60
+	c.timeLabel.SetText("25 Minutes")
 }
 
 func (c *clock) animate(co fyne.CanvasObject) {
@@ -89,8 +95,9 @@ func (c *clock) animate(co fyne.CanvasObject) {
 			fmt.Println(c.countdown.minute, " : ", c.countdown.second)
 		}
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
-			n := fyne.NewNotification("🍎 is over!", "🍎 is over")
+			n := fyne.NewNotification("🍅 is over!", "🍅 is over")
 			app.New().SendNotification(n)
+			c.reset()
 		}
 	}()
 }
