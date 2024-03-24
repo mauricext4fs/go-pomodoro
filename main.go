@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -11,9 +12,10 @@ import (
 )
 
 type clock struct {
-	timeLabel *widget.Label
-	countdown countdown
-	stop      bool
+	timeLabel   *widget.Label
+	actionButon *widget.Button
+	countdown   countdown
+	stop        bool
 }
 
 type countdown struct {
@@ -39,18 +41,31 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.timeLabel = widget.NewLabel("25 Minutes")
 	clock.timeLabel.TextStyle.Bold = true
 	clock.timeLabel.Importance = widget.HighImportance
+	clock.stop = true
 
 	content := clock.render()
-	go clock.animate(content)
+	clock.actionButon = widget.NewButton("Start 🍎", func() {
+		if clock.stop {
+			log.Println("Starting 🍎")
+			clock.actionButon.SetText("Stop 🍎")
+			clock.stop = false
+			go clock.animate(content)
+		} else {
+			log.Println("Stopping 🍎")
+			clock.actionButon.SetText("Start 🍎")
+			clock.stop = true
+		}
+	})
+	content.Add(clock.actionButon)
 
 	return content
 }
 
 func (c *clock) render() *fyne.Container {
 
-	container := container.NewStack(c.timeLabel)
+	co := container.NewVBox(c.timeLabel)
 
-	return container
+	return co
 }
 
 func (c *clock) animate(co fyne.CanvasObject) {
