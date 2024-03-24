@@ -12,10 +12,11 @@ import (
 )
 
 type clock struct {
-	timeLabel   *widget.Label
-	actionButon *widget.Button
-	countdown   countdown
-	stop        bool
+	timeLabel       *widget.Label
+	startstopButton *widget.Button
+	resetButton     *widget.Button
+	countdown       countdown
+	stop            bool
 }
 
 type countdown struct {
@@ -41,22 +42,24 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.timeLabel = widget.NewLabel("25 Minutes")
 	clock.timeLabel.TextStyle.Bold = true
 	clock.timeLabel.Importance = widget.HighImportance
-	clock.stop = true
+	clock.reset()
+	// Easier for testing
+	clock.countdown.minute = 1
 
 	content := clock.render()
-	clock.actionButon = widget.NewButton("Start 🍎", func() {
+	clock.startstopButton = widget.NewButton("Start 🍎", func() {
 		if clock.stop {
 			log.Println("Starting 🍎")
-			clock.actionButon.SetText("Stop 🍎")
+			clock.startstopButton.SetText("Stop 🍎")
 			clock.stop = false
 			go clock.animate(content)
 		} else {
 			log.Println("Stopping 🍎")
-			clock.actionButon.SetText("Start 🍎")
+			clock.startstopButton.SetText("Start 🍎")
 			clock.stop = true
 		}
 	})
-	content.Add(clock.actionButon)
+	content.Add(clock.startstopButton)
 
 	return content
 }
@@ -68,13 +71,16 @@ func (c *clock) render() *fyne.Container {
 	return co
 }
 
+func (c *clock) reset() {
+	c.stop = true
+	c.countdown.minute = 24
+	c.countdown.second = 60
+}
+
 func (c *clock) animate(co fyne.CanvasObject) {
 	tick := time.NewTicker(time.Second)
 	go func() {
-		// Easier for testing
-		//c.countdown.minute = 24
-		c.countdown.minute = 1
-		c.countdown.second = 60
+
 		for !c.stop {
 			c.Layout(nil, co.Size())
 			<-tick.C
@@ -82,8 +88,10 @@ func (c *clock) animate(co fyne.CanvasObject) {
 			c.timeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.countdown.minute, c.countdown.second))
 			fmt.Println(c.countdown.minute, " : ", c.countdown.second)
 		}
-		n := fyne.NewNotification("🍎 is over!", "🍎 is over")
-		app.New().SendNotification(n)
+		if c.countdown.minute == 0 && c.countdown.second == 0 {
+			n := fyne.NewNotification("🍎 is over!", "🍎 is over")
+			app.New().SendNotification(n)
+		}
 	}()
 }
 
