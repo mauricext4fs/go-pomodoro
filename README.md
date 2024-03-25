@@ -15,3 +15,6 @@ A simple Pomodoro GUI Application written in Go with the Fyne.io toolkit
 - Add Clock Animation
 - Add sound effect
 
+### Version 3
+- Add Break 5/20 functionality
+- Try to make it work for iOS
