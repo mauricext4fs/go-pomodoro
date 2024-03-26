@@ -30,7 +30,7 @@ func main() {
 
 	c.Objects = []fyne.CanvasObject{Show(w)}
 
-	w.Resize(fyne.Size{Width: 1024, Height: 768})
+	w.Resize(fyne.Size{Width: 400, Height: 300})
 	w.CenterOnScreen()
 	w.SetContent(c)
 	w.ShowAndRun()
