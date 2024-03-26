@@ -38,8 +38,7 @@ func main() {
 
 func Show(win fyne.Window) fyne.CanvasObject {
 	clock := &clock{}
-	clock.timeLabel = widget.NewLabel("25 Minutes")
-	clock.timeLabel.TextStyle.Bold = true
+	clock.timeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	clock.timeLabel.Importance = widget.HighImportance
 
 	content := clock.render()
