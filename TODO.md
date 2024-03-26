@@ -3,12 +3,13 @@
 ## Vesrion 1
 - x Add icon
 - x Build for Intel
-- Build for M 
-- Package it 
-- Release it
+- x Build for M
+- x Package it
+- x Release it
 
 ## Vesrion 2 
-- Fix Theme (Font alignment)
+- Adjust initial window size
+- Fix Theme (Font, Alignment, etc...)
 - Add Break 5/20 functionality
 
 ## Version 3
