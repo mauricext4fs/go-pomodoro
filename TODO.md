@@ -8,7 +8,7 @@
 - x Release it
 
 ## Vesrion 2 
-- Adjust initial window size
+- x Adjust initial window size
 - Fix Theme (Font, Alignment, etc...)
 - Add Break 5/20 functionality
 
