@@ -11,11 +11,13 @@ import (
 )
 
 type clock struct {
-	timeLabel       *widget.Label
-	startstopButton *widget.Button
-	resetButton     *widget.Button
-	countdown       countdown
-	stop            bool
+	timeLabel                *widget.Label
+	startstopButton          *widget.Button
+	start5MinuteBreakButton  *widget.Button
+	start20MinuteBreakButton *widget.Button
+	resetButton              *widget.Button
+	countdown                countdown
+	stop                     bool
 }
 
 type countdown struct {
@@ -52,10 +54,34 @@ func Show(win fyne.Window) fyne.CanvasObject {
 			clock.stop = true
 		}
 	})
+	clock.start5MinuteBreakButton = widget.NewButton("Start 5 Minute Break", func() {
+		clock.countdown.minute = 5
+		if clock.stop {
+			clock.startstopButton.SetText("Pause 5 Minute Break")
+			clock.stop = false
+			go clock.animate(content)
+		} else {
+			clock.startstopButton.SetText("Continue 5 Minute Break")
+			clock.stop = true
+		}
+	})
+	clock.start20MinuteBreakButton = widget.NewButton("Start 20 Minute Break", func() {
+		clock.countdown.minute = 20
+		if clock.stop {
+			clock.startstopButton.SetText("Pause 20 Minute Break")
+			clock.stop = false
+			go clock.animate(content)
+		} else {
+			clock.startstopButton.SetText("Continue 20 Minute Break")
+			clock.stop = true
+		}
+	})
 	clock.resetButton = widget.NewButton("Reset ", func() {
 		clock.reset()
 	})
 	content.Add(clock.startstopButton)
+	content.Add(clock.start5MinuteBreakButton)
+	content.Add(clock.start20MinuteBreakButton)
 	content.Add(clock.resetButton)
 
 	clock.reset()

@@ -9,7 +9,7 @@
 
 ## Vesrion 2 
 - x Adjust initial window size
-- Fix Theme (Font, Alignment, etc...)
+- Fix Theme (x Font, x Alignment, etc...)
 - Add Break 5/20 functionality
 
 ## Version 3
