@@ -13,6 +13,8 @@
 - Change backround color maybe???
 - Add Break 5/20 functionality
 - 60 seconds?!?
+- Add the v2 into the app icon
+- Add Applicaiton icon (now showing the script editor icon)
 
 
 ## Version 3
