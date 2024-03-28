@@ -8,9 +8,12 @@
 - x Release it
 
 ## Vesrion 2 
-- x Adjust initial window size
-- Fix Theme (x Font, x Alignment, etc...)
+- Adjust initial window size
+- Fix Theme (Font size and color, x Alignment, etc...)
+- Change backround color maybe???
 - Add Break 5/20 functionality
+- 60 seconds?!?
+
 
 ## Version 3
 - Try to make it work for iOS
