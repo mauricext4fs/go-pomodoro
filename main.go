@@ -2,13 +2,19 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
+
+type myTheme struct{}
+
+var _ fyne.Theme = (*myTheme)(nil)
 
 type clock struct {
 	timeLabel                *widget.Label
@@ -27,6 +33,7 @@ type countdown struct {
 
 func main() {
 	a := app.New()
+	a.Settings().SetTheme(&myTheme{})
 	w := a.NewWindow("Go Pomodoro")
 	c := container.NewStack()
 
@@ -38,6 +45,30 @@ func main() {
 	w.ShowAndRun()
 }
 
+func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+	if name == theme.ColorNameBackground {
+		if variant == theme.VariantLight {
+			return color.White
+		}
+		return color.Black
+	}
+	return theme.DefaultTheme().Color(name, variant)
+}
+
+func (m myTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+
+	return theme.DefaultTheme().Icon(name)
+}
+
+func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
+	return theme.DefaultTheme().Font(style)
+}
+
+func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
+	//return theme.DefaultTheme().Size(name)
+	return 22
+}
+
 func Show(win fyne.Window) fyne.CanvasObject {
 	clock := &clock{}
 	clock.timeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
@@ -46,11 +77,13 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
 		if clock.stop {
-			clock.startstopButton.SetText("Pause")
+			clock.startstopButton.SetText("")
+			clock.startstopButton.SetIcon(theme.MediaPauseIcon())
 			clock.stop = false
 			go clock.animate(content)
 		} else {
 			clock.startstopButton.SetText("Continue")
+			clock.startstopButton.SetIcon(nil)
 			clock.stop = true
 		}
 	})
