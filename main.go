@@ -81,8 +81,7 @@ func Show(win fyne.Window) fyne.CanvasObject {
 			clock.stop = false
 			go clock.animate(content)
 		} else {
-			clock.startstopButton.SetText("Continue")
-			clock.startstopButton.SetIcon(nil)
+			clock.updateStartstopButton("Continue", false)
 			clock.stop = true
 		}
 	})
@@ -90,11 +89,11 @@ func Show(win fyne.Window) fyne.CanvasObject {
 		clock.countdown.minute = 5
 		clock.countdown.second = 0
 		if clock.stop {
-			clock.startstopButton.SetText("Pause 5 Minute Break")
+			clock.updateStartstopButton("", true)
 			clock.stop = false
 			go clock.animate(content)
 		} else {
-			clock.startstopButton.SetText("Continue 5 Minute Break")
+			clock.updateStartstopButton("Continue", false)
 			clock.stop = true
 		}
 	})
@@ -102,11 +101,11 @@ func Show(win fyne.Window) fyne.CanvasObject {
 		clock.countdown.minute = 20
 		clock.countdown.second = 00
 		if clock.stop {
-			clock.startstopButton.SetText("Pause 20 Minute Break")
+			clock.updateStartstopButton("", true)
 			clock.stop = false
 			go clock.animate(content)
 		} else {
-			clock.startstopButton.SetText("Continue 20 Minute Break")
+			clock.updateStartstopButton("Continue", false)
 			clock.stop = true
 		}
 	})
@@ -144,7 +143,7 @@ func (c *clock) reset() {
 	c.countdown.minute = 24
 	c.countdown.second = 60
 	c.timeLabel.SetText("25 Minutes")
-	c.startstopButton.SetText("Start 🍅")
+	c.updateStartstopButton("Start 🍅", false)
 }
 
 func (c *clock) animate(co fyne.CanvasObject) {
