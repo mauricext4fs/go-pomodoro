@@ -77,8 +77,7 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
 		if clock.stop {
-			clock.startstopButton.SetText("")
-			clock.startstopButton.SetIcon(theme.MediaPauseIcon())
+			clock.updateStartstopButton("", true)
 			clock.stop = false
 			go clock.animate(content)
 		} else {
@@ -122,6 +121,15 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.reset()
 
 	return content
+}
+
+func (c *clock) updateStartstopButton(msg string, withPauseIcon bool) {
+	c.startstopButton.SetText(msg)
+	if withPauseIcon {
+		c.startstopButton.SetIcon(theme.MediaPauseIcon())
+	} else {
+		c.startstopButton.SetIcon(nil)
+	}
 }
 
 func (c *clock) render() *fyne.Container {
