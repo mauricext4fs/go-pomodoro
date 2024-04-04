@@ -65,8 +65,8 @@ func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
 }
 
 func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
-	//return theme.DefaultTheme().Size(name)
-	return 22
+	//return 22
+	return theme.DefaultTheme().Size(name)
 }
 
 func Show(win fyne.Window) fyne.CanvasObject {
