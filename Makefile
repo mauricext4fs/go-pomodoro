@@ -2,8 +2,8 @@
 
 BINARY_NAME=Pomodoro.app
 APP_NAME=Pomodoro
-VERSION=1.0.0
-BUILD_NO=1
+VERSION=2.0.0
+BUILD_NO=2
 
 ## build: build binary and package app
 build:
