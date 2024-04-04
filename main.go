@@ -123,12 +123,12 @@ func Show(win fyne.Window) fyne.CanvasObject {
 }
 
 func (c *clock) updateStartstopButton(msg string, withPauseIcon bool) {
-	c.startstopButton.SetText(msg)
 	if withPauseIcon {
 		c.startstopButton.SetIcon(theme.MediaPauseIcon())
 	} else {
 		c.startstopButton.SetIcon(nil)
 	}
+	c.startstopButton.SetText(msg)
 }
 
 func (c *clock) render() *fyne.Container {
