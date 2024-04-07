@@ -15,7 +15,7 @@
 - x Pressing any "Start" button should not "Pause/Stop" current counter.
 - Add the v2 into the app icon
 - Add Applicaiton icon (now showing the script editor icon in Notification icon)
-- Edit title of the app when running Pomodoro / Pause
+- x Edit title of the app when running Pomodoro / Pause
 
 
 ## Version 3/ 4
