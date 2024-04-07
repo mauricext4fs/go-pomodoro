@@ -77,31 +77,36 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
 		if clock.stop {
+			fyne.Window.SetTitle(win, "Go Pomodoro : Pomodoro running")
 			clock.updateStartstopButton("", true)
 			clock.stop = false
 			go clock.animate(content)
 		} else {
+			fyne.Window.SetTitle(win, "Go Pomodoro : Paused")
 			clock.updateStartstopButton("Continue", false)
 			clock.stop = true
 		}
 	})
-	clock.start5MinuteBreakButton = widget.NewButton("Start 5 Minute Break", func() {
-    clock.reset()
-    clock.countdown.minute = 5
+	clock.start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
+		clock.reset()
+		clock.countdown.minute = 5
 		clock.countdown.second = 0
-    clock.updateStartstopButton("", true)
-    clock.stop = false
-    go clock.animate(content)
+		clock.updateStartstopButton("", true)
+		clock.stop = false
+		fyne.Window.SetTitle(win, "Go Pomodoro : 5 Minutes pause running")
+		go clock.animate(content)
 	})
-	clock.start20MinuteBreakButton = widget.NewButton("Start 20 Minute Break", func() {
-    clock.reset()
+	clock.start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
+		clock.reset()
 		clock.countdown.minute = 20
 		clock.countdown.second = 00
-    clock.updateStartstopButton("", true)
-    clock.stop = false
-    go clock.animate(content)
+		clock.updateStartstopButton("", true)
+		clock.stop = false
+		fyne.Window.SetTitle(win, "Go Pomodoro : 20 Minutes pause running")
+		go clock.animate(content)
 	})
 	clock.resetButton = widget.NewButton("Reset ", func() {
+		fyne.Window.SetTitle(win, "Go Pomodoro")
 		clock.reset()
 	})
 	content.Add(clock.startstopButton)
@@ -131,12 +136,13 @@ func (c *clock) render() *fyne.Container {
 }
 
 func (c *clock) reset() {
-  // Stop any existing counter (if any)
-  c.stop = true
-  time.Sleep(1 * time.Second)
-	c.countdown.minute = 25
+	// Stop any existing counter (if any)
+	c.stop = true
+	time.Sleep(1 * time.Second)
+	c.countdown.minute = 24
 	c.countdown.second = 59
 	c.timeLabel.SetText("25 Minutes")
+
 	c.updateStartstopButton("Start 🍅", false)
 }
 
@@ -166,7 +172,7 @@ func (c *clock) countdownDown(cd *countdown) {
 	cd.second--
 	if cd.minute >= 1 && cd.second <= 0 {
 		cd.minute--
-		cd.second = 60
+		cd.second = 59
 	} else if cd.minute == 0 && cd.second <= 0 {
 		c.stop = true
 	}
