@@ -34,7 +34,7 @@ type countdown struct {
 func main() {
 	a := app.New()
 	a.Settings().SetTheme(&myTheme{})
-	w := a.NewWindow("Go Pomodoro")
+	w := a.NewWindow("Go 🍅")
 	c := container.NewStack()
 
 	c.Objects = []fyne.CanvasObject{Show(w)}
@@ -161,7 +161,7 @@ func (c *clock) animate(co fyne.CanvasObject, win fyne.Window) {
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 			app.New().SendNotification(n)
-			c.reset(win, "vlad")
+			c.reset(win, "Go 🍅")
 		}
 	}()
 }
