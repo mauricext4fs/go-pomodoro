@@ -88,33 +88,30 @@ func Show(win fyne.Window) fyne.CanvasObject {
 		}
 	})
 	clock.start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
-		clock.reset(nil, "")
+		clock.reset(win, "Go 🍅: 5 Minutes pause running")
 		clock.countdown.minute = 5
 		clock.countdown.second = 0
 		clock.updateStartstopButton("", true)
 		clock.stop = false
-		fyne.Window.SetTitle(win, "Go 🍅: 5 Minutes pause running")
 		go clock.animate(content, win)
 	})
 	clock.start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
-		clock.reset(nil, "")
+		clock.reset(win, "Go 🍅: 20 Minutes pause running")
 		clock.countdown.minute = 20
 		clock.countdown.second = 00
 		clock.updateStartstopButton("", true)
 		clock.stop = false
-		fyne.Window.SetTitle(win, "Go 🍅: 20 Minutes pause running")
 		go clock.animate(content, win)
 	})
 	clock.resetButton = widget.NewButton("Reset ", func() {
-		fyne.Window.SetTitle(win, "Go 🍅")
-		clock.reset(nil, "")
+		clock.reset(win, "Go 🍅")
 	})
 	content.Add(clock.startstopButton)
 	content.Add(clock.start5MinuteBreakButton)
 	content.Add(clock.start20MinuteBreakButton)
 	content.Add(clock.resetButton)
 
-	clock.reset(nil, "")
+	clock.reset(win, "Go 🍅")
 
 	return content
 }
