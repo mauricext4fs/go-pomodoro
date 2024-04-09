@@ -13,8 +13,8 @@
 - x Get a Pause UTF code in button / Title (using fyne icon instead of utf-8 code)
 - x BUG: 60 seconds?!?
 - x Pressing any "Start" button should not "Pause/Stop" current counter.
-- Change Notification message for: Tomatoe is completed!
-- BUG: App title not reset when action finished (Pomodoro)
+- x Change Notification message for: 🍅 is completed!
+- x BUG: App title not reset when action finished (Pomodoro)
 - x Add the v2 into the app icon
 - x Edit title of the app when running Pomodoro / Pause
 
