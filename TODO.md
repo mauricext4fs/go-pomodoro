@@ -19,14 +19,17 @@
 - x Edit title of the app when running Pomodoro / Pause
 
 
-## Version 3/ 4
-- Add counter for completed Pomodoro
+## Version 3
 - BUG: 0 Second missing
-- Fix: Notification icon is incorrect
-- Fix Theme (Font size and color, x Alignment, etc...)
-- BUG: When the Pomodoro counter get to Zero the Theme get mess up!
-- Add History with custom label (work, study, etc...)
+- BUG: Sometime the app just close by itself without crash report
 - Add Systray animation
-- Try to make it work for iOS
-- Add Clock Animation
 - Add sound effect
+
+## Version 4 / 5
+- Try to make it work for iOS
+- Try to make it work for Windows
+- Add Clock Animation
+- Add counter for completed Pomodoro
+- Add History with custom label (work, study, etc...)
+- Fix Theme (Font size and color, x Alignment, etc...)
+- Fix: Notification icon is incorrect
