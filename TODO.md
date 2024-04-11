@@ -24,7 +24,7 @@
 - BUG: Sometime the app just close by itself without crash report
 - BUG: When Pomodoro (25 Minutes) is over, the Window title is not reset to original
 - Modify icon to v3
-- Add Systray animation
+- x Add Systray
 - Add sound effect
 
 ## Version 4 / 5

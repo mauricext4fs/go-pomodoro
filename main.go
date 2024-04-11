@@ -3,11 +3,13 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
@@ -35,8 +37,23 @@ func main() {
 	a := app.New()
 	a.Settings().SetTheme(&myTheme{})
 	w := a.NewWindow("Go 🍅")
-	c := container.NewStack()
 
+	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
+	if err == nil {
+		a.SetIcon(tomatoeIcon)
+	}
+	if desk, ok := a.(desktop.App); ok {
+		log.Println("On Desktop!!")
+		w.SetCloseIntercept(func() {
+			w.Hide()
+		})
+		m := fyne.NewMenu("Go Pomodoro",
+			fyne.NewMenuItem("Show", func() {
+				w.Show()
+			}))
+		desk.SetSystemTrayMenu(m)
+	}
+	c := container.NewStack()
 	c.Objects = []fyne.CanvasObject{Show(w)}
 
 	w.Resize(fyne.Size{Width: 400, Height: 300})
