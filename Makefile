@@ -2,13 +2,13 @@
 
 BINARY_NAME="Go Pomodoro.app"
 APP_NAME="Go Pomodoro"
-VERSION=2.0.0
-BUILD_NO=2
+VERSION=3.0.0
+BUILD_NO=3
 
 ## build: build binary and package app
 build:
 	rm -rf ${BINARY_NAME}
-	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -name ${APP_NAME} -release
+	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -name ${APP_NAME} -appID ch.mauricext4fs.gopomodoro -release
 
 ## run: builds and runs the application
 run:
