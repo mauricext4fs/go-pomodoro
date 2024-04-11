@@ -22,6 +22,8 @@
 ## Version 3
 - BUG: 0 Second missing
 - BUG: Sometime the app just close by itself without crash report
+- BUG: When Pomodoro (25 Minutes) is over, the Window title is not reset to original
+- Modify icon to v3
 - Add Systray animation
 - Add sound effect
 
