@@ -22,6 +22,8 @@
 ## Version 3
 - BUG: 0 Second missing
 - BUG: Sometime the app just close by itself without crash report
+			 This seems to happened often after the end of a Pomodoro (on notification). 
+			 Seems to have gotten especially worse since adding the systray icon. 
 - BUG: When Pomodoro (25 Minutes) is over, the Window title is not reset to original
 - Modify icon to v3
 - x Add Systray
