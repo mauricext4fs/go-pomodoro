@@ -52,6 +52,10 @@ func main() {
 				w.Show()
 			}))
 		desk.SetSystemTrayMenu(m)
+		tomatoeSystrayIcon, err := fyne.LoadResourceFromPath("icon_systray.png")
+		if err == nil {
+			desk.SetSystemTrayIcon(tomatoeSystrayIcon)
+		}
 	}
 	c := container.NewStack()
 	c.Objects = []fyne.CanvasObject{Show(w)}
