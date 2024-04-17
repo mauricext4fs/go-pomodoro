@@ -25,7 +25,9 @@
 			 This seems to happened often after the end of a Pomodoro (on notification). 
 			 Seems to have gotten especially worse since adding the systray icon. 
 - BUG: When Pomodoro (25 Minutes) is over, the Window title is not reset to original
-- Modify icon to v3
+- Modify icon
+	- x to v3
+  - add separate transparent icon for systray
 - x Add Systray
 - Add sound effect
 
