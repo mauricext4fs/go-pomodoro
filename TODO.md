@@ -25,10 +25,10 @@
 			 This seems to happened often after the end of a Pomodoro (on notification). 
 			 Seems to have gotten especially worse since adding the systray icon. 
 - BUG: When Pomodoro (25 Minutes) is over, the Window title is not reset to original
-- Modify icon
+- x Modify icon
 	- x to v3
-  - add separate transparent icon for systray
-		- Not working... the icon is not automatically copy into the build
+  - x add separate transparent icon for systray
+		- x Not working... the icon is not automatically copy into the build
 			cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
 - x Add Systray
 - Add sound effect

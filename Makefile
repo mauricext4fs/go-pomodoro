@@ -10,6 +10,8 @@ BUILD_NO=3
 build:
 	rm -rf ${BINARY_NAME}
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -name ${APP_NAME} -appID ${APP_ID} -release
+	## Manually copying the systray icon as it is not done in the fyne build process
+	cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
 
 ## run: builds and runs the application
 run:
