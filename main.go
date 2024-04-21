@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"os"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -12,6 +13,9 @@ import (
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/speaker"
+	"github.com/gopxl/beep/wav"
 )
 
 type myTheme struct{}
@@ -66,6 +70,29 @@ func main() {
 	w.ShowAndRun()
 }
 
+func playNotificationSound() {
+	f, err := os.Open("notification.wav")
+	if err != nil {
+		log.Fatal("Error: ", err)
+	}
+
+	streamer, format, err := wav.Decode(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer streamer.Close()
+
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+
+	done := make(chan bool)
+	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
+		done <- true
+	})))
+
+	<-done
+}
+
 func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	if name == theme.ColorNameBackground {
 		if variant == theme.VariantLight {
@@ -97,6 +124,7 @@ func Show(win fyne.Window) fyne.CanvasObject {
 
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
+		playNotificationSound()
 		if clock.stop {
 			fyne.Window.SetTitle(win, "Go 🍅: Pomodoro running")
 			clock.updateStartstopButton("", true)
