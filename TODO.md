@@ -1,32 +1,31 @@
 # TODO
 
-## Vesrion 1
-- x Add icon
-- x Build for Intel
-- x Build for M
-- x Package it
-- x Release it
+## Version 3
+- x Modify icon
+	- x to v3
+  - x add separate transparent icon for systray
+		- x Not working... the icon is not automatically copy into the build
+			cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
+- x Add Systray
+- x Add sound effect
 
-## Vesrion 2 
-- x Adjust initial window size
-- x Add Break 5/20 functionality
-- x Get a Pause UTF code in button / Title (using fyne icon instead of utf-8 code)
-- x BUG: 60 seconds?!?
-- x Pressing any "Start" button should not "Pause/Stop" current counter.
-- x Change Notification message for: 🍅 is completed!
-- x BUG: App title not reset when action finished (Pomodoro)
-- x Add the v2 into the app icon
-- x Edit title of the app when running Pomodoro / Pause
+## Version 4
+- Refactoring
 
 
-## Version 3/ 4
-- Add counter for completed Pomodoro
-- BUG: 0 Second missing
-- Fix: Notification icon is incorrect
-- Fix Theme (Font size and color, x Alignment, etc...)
-- BUG: When the Pomodoro counter get to Zero the Theme get mess up!
-- Add History with custom label (work, study, etc...)
-- Add Systray animation
+## Version 5
+- Add a way to disable sound 
+- Add a way to disable notification
+- Add "About" item in menu
 - Try to make it work for iOS
+- Try to make it work for Windows
 - Add Clock Animation
-- Add sound effect
+- Add counter for completed Pomodoro
+- Add History with custom label (work, study, etc...)
+- Fix Theme (Font size and color, x Alignment, etc...)
+- Fix: Notification icon is incorrect
+- BUG: 0 Second missing
+- BUG: Sometime the app just close by itself without crash report
+			 This seems to happened often after the end of a Pomodoro (on notification). 
+			 Seems to have gotten especially worse since adding the systray icon. 
+

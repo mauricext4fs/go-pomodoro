@@ -3,13 +3,19 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"log"
+	"os"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/speaker"
+	"github.com/gopxl/beep/wav"
 )
 
 type myTheme struct{}
@@ -35,14 +41,56 @@ func main() {
 	a := app.New()
 	a.Settings().SetTheme(&myTheme{})
 	w := a.NewWindow("Go 🍅")
-	c := container.NewStack()
 
+	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
+	if err == nil {
+		a.SetIcon(tomatoeIcon)
+	}
+	if desk, ok := a.(desktop.App); ok {
+		log.Println("On Desktop!!")
+		w.SetCloseIntercept(func() {
+			w.Hide()
+		})
+		m := fyne.NewMenu("Go Pomodoro",
+			fyne.NewMenuItem("Show", func() {
+				w.Show()
+			}))
+		desk.SetSystemTrayMenu(m)
+		tomatoeSystrayIcon, err := fyne.LoadResourceFromPath("icon_systray.png")
+		if err == nil {
+			desk.SetSystemTrayIcon(tomatoeSystrayIcon)
+		}
+	}
+	c := container.NewStack()
 	c.Objects = []fyne.CanvasObject{Show(w)}
 
 	w.Resize(fyne.Size{Width: 400, Height: 300})
 	w.CenterOnScreen()
 	w.SetContent(c)
 	w.ShowAndRun()
+}
+
+func playNotificationSound() {
+	f, err := os.Open("notification.wav")
+	if err != nil {
+		log.Fatal("Error: ", err)
+	}
+
+	streamer, format, err := wav.Decode(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer streamer.Close()
+
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+
+	done := make(chan bool)
+	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
+		done <- true
+	})))
+
+	<-done
 }
 
 func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
@@ -158,6 +206,7 @@ func (c *clock) animate(co fyne.CanvasObject, win fyne.Window) {
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 			app.New().SendNotification(n)
+			playNotificationSound()
 			c.reset(win, "Go 🍅")
 		}
 	}()
