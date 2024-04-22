@@ -124,7 +124,6 @@ func Show(win fyne.Window) fyne.CanvasObject {
 
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
-		playNotificationSound()
 		if clock.stop {
 			fyne.Window.SetTitle(win, "Go 🍅: Pomodoro running")
 			clock.updateStartstopButton("", true)
@@ -207,6 +206,7 @@ func (c *clock) animate(co fyne.CanvasObject, win fyne.Window) {
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 			app.New().SendNotification(n)
+			playNotificationSound()
 			c.reset(win, "Go 🍅")
 		}
 	}()
