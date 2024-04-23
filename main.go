@@ -22,17 +22,17 @@ type myTheme struct{}
 
 var _ fyne.Theme = (*myTheme)(nil)
 
-type clock struct {
+type Pomodoro struct {
 	timeLabel                *widget.Label
 	startstopButton          *widget.Button
 	start5MinuteBreakButton  *widget.Button
 	start20MinuteBreakButton *widget.Button
 	resetButton              *widget.Button
-	countdown                countdown
+	countdown                Countdown
 	stop                     bool
 }
 
-type countdown struct {
+type Countdown struct {
 	minute int64
 	second int64
 }
@@ -70,7 +70,7 @@ func main() {
 	w.ShowAndRun()
 }
 
-func playNotificationSound() {
+func PlayNotificationSound() {
 	f, err := os.Open("notification.wav")
 	if err != nil {
 		log.Fatal("Error: ", err)
@@ -118,7 +118,7 @@ func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
 }
 
 func Show(win fyne.Window) fyne.CanvasObject {
-	clock := &clock{}
+	var clock Pomodoro
 	clock.timeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	clock.timeLabel.Importance = widget.HighImportance
 
@@ -164,7 +164,7 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	return content
 }
 
-func (c *clock) updateStartstopButton(msg string, withPauseIcon bool) {
+func (c *Pomodoro) updateStartstopButton(msg string, withPauseIcon bool) {
 	if withPauseIcon {
 		c.startstopButton.SetIcon(theme.MediaPauseIcon())
 	} else {
@@ -173,14 +173,14 @@ func (c *clock) updateStartstopButton(msg string, withPauseIcon bool) {
 	c.startstopButton.SetText(msg)
 }
 
-func (c *clock) render() *fyne.Container {
+func (c *Pomodoro) render() *fyne.Container {
 
 	co := container.NewVBox(c.timeLabel)
 
 	return co
 }
 
-func (c *clock) reset(win fyne.Window, newTitle string) {
+func (c *Pomodoro) reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
 	c.stop = true
 	time.Sleep(1 * time.Second)
@@ -194,7 +194,7 @@ func (c *clock) reset(win fyne.Window, newTitle string) {
 	}
 }
 
-func (c *clock) animate(co fyne.CanvasObject, win fyne.Window) {
+func (c *Pomodoro) animate(co fyne.CanvasObject, win fyne.Window) {
 	tick := time.NewTicker(time.Second)
 	go func() {
 		for !c.stop {
@@ -206,18 +206,18 @@ func (c *clock) animate(co fyne.CanvasObject, win fyne.Window) {
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 			app.New().SendNotification(n)
-			playNotificationSound()
+			PlayNotificationSound()
 			c.reset(win, "Go 🍅")
 		}
 	}()
 }
 
-func (c *clock) Layout(_ []fyne.CanvasObject, size fyne.Size) {
+func (c *Pomodoro) Layout(_ []fyne.CanvasObject, size fyne.Size) {
 	diameter := fyne.Min(size.Width, size.Height)
 	size = fyne.NewSize(diameter, diameter)
 }
 
-func (c *clock) countdownDown(cd *countdown) {
+func (c *Pomodoro) countdownDown(cd *Countdown) {
 	cd.second--
 	if cd.minute >= 1 && cd.second <= 0 {
 		cd.minute--
