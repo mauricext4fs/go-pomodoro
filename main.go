@@ -129,49 +129,49 @@ func Show(win fyne.Window) fyne.CanvasObject {
 	clock.TimeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	clock.TimeLabel.Importance = widget.HighImportance
 
-	content := clock.render()
+	content := clock.Render()
 	clock.StartStopButton = widget.NewButton("Start 🍅", func() {
 		if clock.Stop {
 			fyne.Window.SetTitle(win, "Go 🍅: Pomodoro running")
-			clock.updateStartStopButton("", true)
+			clock.UpdateStartStopButton("", true)
 			clock.Stop = false
-			go clock.animate(content, win)
+			go clock.Animate(content, win)
 		} else {
 			fyne.Window.SetTitle(win, "Go 🍅: Paused")
-			clock.updateStartStopButton("Continue", false)
+			clock.UpdateStartStopButton("Continue", false)
 			clock.Stop = true
 		}
 	})
 	clock.Start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
-		clock.reset(win, "Go 🍅: 5 Minutes pause running")
+		clock.Reset(win, "Go 🍅: 5 Minutes pause running")
 		clock.Countdown.Minute = 5
 		clock.Countdown.Second = 0
-		clock.updateStartStopButton("", true)
+		clock.UpdateStartStopButton("", true)
 		clock.Stop = false
-		go clock.animate(content, win)
+		go clock.Animate(content, win)
 	})
 	clock.Start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
-		clock.reset(win, "Go 🍅: 20 Minutes pause running")
+		clock.Reset(win, "Go 🍅: 20 Minutes pause running")
 		clock.Countdown.Minute = 20
 		clock.Countdown.Second = 00
-		clock.updateStartStopButton("", true)
+		clock.UpdateStartStopButton("", true)
 		clock.Stop = false
-		go clock.animate(content, win)
+		go clock.Animate(content, win)
 	})
 	clock.ResetButton = widget.NewButton("Reset ", func() {
-		clock.reset(win, "Go 🍅")
+		clock.Reset(win, "Go 🍅")
 	})
 	content.Add(clock.StartStopButton)
 	content.Add(clock.Start5MinuteBreakButton)
 	content.Add(clock.Start20MinuteBreakButton)
 	content.Add(clock.ResetButton)
 
-	clock.reset(win, "Go 🍅")
+	clock.Reset(win, "Go 🍅")
 
 	return content
 }
 
-func (c *Pomodoro) updateStartStopButton(msg string, withPauseIcon bool) {
+func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
 	if withPauseIcon {
 		c.StartStopButton.SetIcon(theme.MediaPauseIcon())
 	} else {
@@ -180,14 +180,14 @@ func (c *Pomodoro) updateStartStopButton(msg string, withPauseIcon bool) {
 	c.StartStopButton.SetText(msg)
 }
 
-func (c *Pomodoro) render() *fyne.Container {
+func (c *Pomodoro) Render() *fyne.Container {
 
 	co := container.NewVBox(c.TimeLabel)
 
 	return co
 }
 
-func (c *Pomodoro) reset(win fyne.Window, newTitle string) {
+func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
 	c.Stop = true
 	time.Sleep(1 * time.Second)
@@ -195,13 +195,13 @@ func (c *Pomodoro) reset(win fyne.Window, newTitle string) {
 	c.Countdown.Second = 59
 	c.TimeLabel.SetText("25 Minutes")
 
-	c.updateStartStopButton("Start 🍅", false)
+	c.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
 		fyne.Window.SetTitle(win, newTitle)
 	}
 }
 
-func (c *Pomodoro) animate(co fyne.CanvasObject, win fyne.Window) {
+func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 	tick := time.NewTicker(time.Second)
 	go func() {
 		for !c.Stop {
@@ -214,7 +214,7 @@ func (c *Pomodoro) animate(co fyne.CanvasObject, win fyne.Window) {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 			app.New().SendNotification(n)
 			PlayNotificationSound()
-			c.reset(win, "Go 🍅")
+			c.Reset(win, "Go 🍅")
 		}
 	}()
 }

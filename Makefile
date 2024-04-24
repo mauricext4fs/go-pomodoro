@@ -10,7 +10,7 @@ BUILD_NO=3
 build:
 	rm -rf ${BINARY_NAME}
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -name ${APP_NAME} -appID ${APP_ID} -release
-	echo "Manually copying the systray icon as it is not done in the fyne build process"
+	@echo "Manually copying the systray icon as it is not done in the fyne build process"
 	cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
 	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
 
