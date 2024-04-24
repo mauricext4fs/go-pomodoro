@@ -23,6 +23,8 @@ type MyTheme struct{}
 var _ fyne.Theme = (*MyTheme)(nil)
 
 type Pomodoro struct {
+	App                      fyne.App
+	MainWindow               fyne.Window
 	TimeLabel                *widget.Label
 	StartStopButton          *widget.Button
 	Start5MinuteBreakButton  *widget.Button
@@ -38,9 +40,13 @@ type Countdown struct {
 }
 
 func main() {
-	a := app.New()
+	var p Pomodoro
+	a := app.NewWithID("ch.mauricext4fs.gopomodoro")
+	p.App = a
 	a.Settings().SetTheme(&MyTheme{})
-	w := a.NewWindow("Go 🍅")
+
+	// Window
+	p.MainWindow = a.NewWindow("Go 🍅")
 
 	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
 	if err == nil {
@@ -48,12 +54,12 @@ func main() {
 	}
 	if desk, ok := a.(desktop.App); ok {
 		log.Println("On Desktop!!")
-		w.SetCloseIntercept(func() {
-			w.Hide()
+		p.MainWindow.SetCloseIntercept(func() {
+			p.MainWindow.Hide()
 		})
 		m := fyne.NewMenu("Go Pomodoro",
 			fyne.NewMenuItem("Show", func() {
-				w.Show()
+				p.MainWindow.Show()
 			}))
 		desk.SetSystemTrayMenu(m)
 		tomatoeSystrayIcon, err := fyne.LoadResourceFromPath("icon_systray.png")
@@ -62,12 +68,12 @@ func main() {
 		}
 	}
 	c := container.NewStack()
-	c.Objects = []fyne.CanvasObject{Show(w)}
+	c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
 
-	w.Resize(fyne.Size{Width: 400, Height: 300})
-	w.CenterOnScreen()
-	w.SetContent(c)
-	w.ShowAndRun()
+	p.MainWindow.Resize(fyne.Size{Width: 400, Height: 300})
+	p.MainWindow.CenterOnScreen()
+	p.MainWindow.SetContent(c)
+	p.MainWindow.ShowAndRun()
 }
 
 func PlayNotificationSound() {
