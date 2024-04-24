@@ -23,7 +23,7 @@ type MyTheme struct{}
 var _ fyne.Theme = (*MyTheme)(nil)
 
 type Pomodoro struct {
-	timeLabel                *widget.Label
+	TimeLabel                *widget.Label
 	startstopButton          *widget.Button
 	start5MinuteBreakButton  *widget.Button
 	start20MinuteBreakButton *widget.Button
@@ -119,8 +119,8 @@ func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
 
 func Show(win fyne.Window) fyne.CanvasObject {
 	var clock Pomodoro
-	clock.timeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-	clock.timeLabel.Importance = widget.HighImportance
+	clock.TimeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	clock.TimeLabel.Importance = widget.HighImportance
 
 	content := clock.render()
 	clock.startstopButton = widget.NewButton("Start 🍅", func() {
@@ -175,7 +175,7 @@ func (c *Pomodoro) updateStartstopButton(msg string, withPauseIcon bool) {
 
 func (c *Pomodoro) render() *fyne.Container {
 
-	co := container.NewVBox(c.timeLabel)
+	co := container.NewVBox(c.TimeLabel)
 
 	return co
 }
@@ -186,7 +186,7 @@ func (c *Pomodoro) reset(win fyne.Window, newTitle string) {
 	time.Sleep(1 * time.Second)
 	c.countdown.minute = 24
 	c.countdown.second = 59
-	c.timeLabel.SetText("25 Minutes")
+	c.TimeLabel.SetText("25 Minutes")
 
 	c.updateStartstopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
@@ -201,7 +201,7 @@ func (c *Pomodoro) animate(co fyne.CanvasObject, win fyne.Window) {
 			c.Layout(nil, co.Size())
 			<-tick.C
 			c.countdownDown(&c.countdown)
-			c.timeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.countdown.minute, c.countdown.second))
+			c.TimeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.countdown.minute, c.countdown.second))
 		}
 		if c.countdown.minute == 0 && c.countdown.second == 0 {
 			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
