@@ -18,9 +18,9 @@ import (
 	"github.com/gopxl/beep/wav"
 )
 
-type myTheme struct{}
+type MyTheme struct{}
 
-var _ fyne.Theme = (*myTheme)(nil)
+var _ fyne.Theme = (*MyTheme)(nil)
 
 type Pomodoro struct {
 	timeLabel                *widget.Label
@@ -39,7 +39,7 @@ type Countdown struct {
 
 func main() {
 	a := app.New()
-	a.Settings().SetTheme(&myTheme{})
+	a.Settings().SetTheme(&MyTheme{})
 	w := a.NewWindow("Go 🍅")
 
 	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
@@ -93,7 +93,7 @@ func PlayNotificationSound() {
 	<-done
 }
 
-func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+func (m MyTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	if name == theme.ColorNameBackground {
 		if variant == theme.VariantLight {
 			return color.White
@@ -103,16 +103,16 @@ func (m myTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) colo
 	return theme.DefaultTheme().Color(name, variant)
 }
 
-func (m myTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
 
 	return theme.DefaultTheme().Icon(name)
 }
 
-func (m myTheme) Font(style fyne.TextStyle) fyne.Resource {
+func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
 	return theme.DefaultTheme().Font(style)
 }
 
-func (m myTheme) Size(name fyne.ThemeSizeName) float32 {
+func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
 	//return 22
 	return theme.DefaultTheme().Size(name)
 }

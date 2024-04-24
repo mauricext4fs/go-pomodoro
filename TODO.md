@@ -5,6 +5,7 @@
 
 
 ## Version 5
+- Add a quit button
 - Add a way to disable sound 
 - Add a way to disable notification
 - Add "About" item in menu
