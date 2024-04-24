@@ -47,6 +47,9 @@ func main() {
 
 	// Window
 	p.MainWindow = a.NewWindow("Go 🍅")
+	p.MainWindow.Resize(fyne.Size{Width: 290, Height: 275})
+	p.MainWindow.CenterOnScreen()
+	p.MainWindow.SetMaster()
 
 	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
 	if err == nil {
@@ -70,8 +73,6 @@ func main() {
 	c := container.NewStack()
 	c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
 
-	p.MainWindow.Resize(fyne.Size{Width: 400, Height: 300})
-	p.MainWindow.CenterOnScreen()
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
 }
