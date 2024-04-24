@@ -1,19 +1,11 @@
 # TODO
 
-## Version 3
-- x Modify icon
-	- x to v3
-  - x add separate transparent icon for systray
-		- x Not working... the icon is not automatically copy into the build
-			cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
-- x Add Systray
-- x Add sound effect
-
 ## Version 4
 - Refactoring
 
 
 ## Version 5
+- Add a quit button
 - Add a way to disable sound 
 - Add a way to disable notification
 - Add "About" item in menu
