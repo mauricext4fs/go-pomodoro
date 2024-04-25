@@ -9,6 +9,8 @@
 - Add a quit button
 - Start Apple dev process to get App store build
 - BUG: Notification icon is incorrect
+- Refactor CountDown method 
+- Refactor playNotificationSound
 
 ## Version 6
 

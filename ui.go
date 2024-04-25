@@ -1,9 +1,41 @@
 package main
 
 import (
+	"image/color"
+
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
+
+type MyTheme struct{}
+
+var _ fyne.Theme = (*MyTheme)(nil)
+
+func (m MyTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
+	if name == theme.ColorNameBackground {
+		if variant == theme.VariantLight {
+			return color.White
+		}
+		return color.Black
+	}
+	return theme.DefaultTheme().Color(name, variant)
+}
+
+func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+
+	return theme.DefaultTheme().Icon(name)
+}
+
+func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
+	return theme.DefaultTheme().Font(style)
+}
+
+func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
+	//return 22
+	return theme.DefaultTheme().Size(name)
+}
 
 func (clock *Pomodoro) Show() fyne.CanvasObject {
 	clock.TimeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
@@ -50,4 +82,25 @@ func (clock *Pomodoro) Show() fyne.CanvasObject {
 
 	return content
 
+}
+
+func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
+	if withPauseIcon {
+		c.StartStopButton.SetIcon(theme.MediaPauseIcon())
+	} else {
+		c.StartStopButton.SetIcon(nil)
+	}
+	c.StartStopButton.SetText(msg)
+}
+
+func (c *Pomodoro) Render() *fyne.Container {
+
+	co := container.NewVBox(c.TimeLabel)
+
+	return co
+}
+
+func (c *Pomodoro) Layout(_ []fyne.CanvasObject, size fyne.Size) {
+	diameter := fyne.Min(size.Width, size.Height)
+	size = fyne.NewSize(diameter, diameter)
 }

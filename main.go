@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"log"
 	"os"
 	"time"
@@ -11,16 +10,11 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/speaker"
 	"github.com/gopxl/beep/wav"
 )
-
-type MyTheme struct{}
-
-var _ fyne.Theme = (*MyTheme)(nil)
 
 type Pomodoro struct {
 	App                      fyne.App
@@ -101,46 +95,6 @@ func PlayNotificationSound() {
 	<-done
 }
 
-func (m MyTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
-	if name == theme.ColorNameBackground {
-		if variant == theme.VariantLight {
-			return color.White
-		}
-		return color.Black
-	}
-	return theme.DefaultTheme().Color(name, variant)
-}
-
-func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
-
-	return theme.DefaultTheme().Icon(name)
-}
-
-func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
-	return theme.DefaultTheme().Font(style)
-}
-
-func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
-	//return 22
-	return theme.DefaultTheme().Size(name)
-}
-
-func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
-	if withPauseIcon {
-		c.StartStopButton.SetIcon(theme.MediaPauseIcon())
-	} else {
-		c.StartStopButton.SetIcon(nil)
-	}
-	c.StartStopButton.SetText(msg)
-}
-
-func (c *Pomodoro) Render() *fyne.Container {
-
-	co := container.NewVBox(c.TimeLabel)
-
-	return co
-}
-
 func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
 	c.Stop = true
@@ -171,11 +125,6 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			c.Reset(win, "Go 🍅")
 		}
 	}()
-}
-
-func (c *Pomodoro) Layout(_ []fyne.CanvasObject, size fyne.Size) {
-	diameter := fyne.Min(size.Width, size.Height)
-	size = fyne.NewSize(diameter, diameter)
 }
 
 func (c *Pomodoro) CountdownDown(cd *Countdown) {
