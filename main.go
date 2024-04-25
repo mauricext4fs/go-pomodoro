@@ -24,6 +24,7 @@ type Pomodoro struct {
 	Start5MinuteBreakButton  *widget.Button
 	Start20MinuteBreakButton *widget.Button
 	ResetButton              *widget.Button
+	SoundSlider              *widget.Slider
 	Countdown                Countdown
 	Stop                     bool
 }

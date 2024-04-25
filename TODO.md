@@ -8,9 +8,10 @@
 - Setup preference for saving notification and sound preference
 - Add a quit button
 - Start Apple dev process to get App store build
-- BUG: Notification icon is incorrect
 - x Refactor CountDown method 
 - Refactor playNotificationSound
+- BUG: Notification icon is incorrect
+- BUG: Check and replace the log.Fatal so it's not crashing Fyne
 
 ## Version 6
 
