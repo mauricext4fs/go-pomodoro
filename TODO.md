@@ -4,8 +4,9 @@
 - Modify the icon to v5
 - Modify the Build for v5
 - Add a way to disable sound 
-- Add a quit button
 - Add a way to disable notification
+- Setup preference for saving notification and sound preference
+- Add a quit button
 - Start Apple dev process to get App store build
 - BUG: Notification icon is incorrect
 
