@@ -1,21 +1,26 @@
 # TODO
 
-## Version 4
-- Refactoring
-
-
 ## Version 5
-- Add a quit button
+- Modify the icon to v5
+- Modify the Build for v5
 - Add a way to disable sound 
+- Add a quit button
 - Add a way to disable notification
+- Start Apple dev process to get App store build
+- BUG: Notification icon is incorrect
+
+## Version 6
+
 - Add "About" item in menu
-- Try to make it work for iOS
-- Try to make it work for Windows
-- Add Clock Animation
+- Investigate what is need to make it work for iOS
 - Add counter for completed Pomodoro
+
+## Version 7 / 8
+
+- Add Clock Animation
+- Try to make it work for Windows
 - Add History with custom label (work, study, etc...)
 - Fix Theme (Font size and color, x Alignment, etc...)
-- Fix: Notification icon is incorrect
 - BUG: 0 Second missing
 - BUG: Sometime the app just close by itself without crash report
 			 This seems to happened often after the end of a Pomodoro (on notification). 
