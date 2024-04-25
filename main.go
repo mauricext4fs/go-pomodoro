@@ -71,7 +71,8 @@ func main() {
 		}
 	}
 	c := container.NewStack()
-	c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
+	//c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
+	c.Objects = []fyne.CanvasObject{p.Show()}
 
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
@@ -122,53 +123,6 @@ func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
 func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
 	//return 22
 	return theme.DefaultTheme().Size(name)
-}
-
-func Show(win fyne.Window) fyne.CanvasObject {
-	var clock Pomodoro
-	clock.TimeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-	clock.TimeLabel.Importance = widget.HighImportance
-
-	content := clock.Render()
-	clock.StartStopButton = widget.NewButton("Start 🍅", func() {
-		if clock.Stop {
-			fyne.Window.SetTitle(win, "Go 🍅: Pomodoro running")
-			clock.UpdateStartStopButton("", true)
-			clock.Stop = false
-			go clock.Animate(content, win)
-		} else {
-			fyne.Window.SetTitle(win, "Go 🍅: Paused")
-			clock.UpdateStartStopButton("Continue", false)
-			clock.Stop = true
-		}
-	})
-	clock.Start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
-		clock.Reset(win, "Go 🍅: 5 Minutes pause running")
-		clock.Countdown.Minute = 5
-		clock.Countdown.Second = 0
-		clock.UpdateStartStopButton("", true)
-		clock.Stop = false
-		go clock.Animate(content, win)
-	})
-	clock.Start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
-		clock.Reset(win, "Go 🍅: 20 Minutes pause running")
-		clock.Countdown.Minute = 20
-		clock.Countdown.Second = 00
-		clock.UpdateStartStopButton("", true)
-		clock.Stop = false
-		go clock.Animate(content, win)
-	})
-	clock.ResetButton = widget.NewButton("Reset ", func() {
-		clock.Reset(win, "Go 🍅")
-	})
-	content.Add(clock.StartStopButton)
-	content.Add(clock.Start5MinuteBreakButton)
-	content.Add(clock.Start20MinuteBreakButton)
-	content.Add(clock.ResetButton)
-
-	clock.Reset(win, "Go 🍅")
-
-	return content
 }
 
 func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
