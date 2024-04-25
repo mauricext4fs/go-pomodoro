@@ -115,7 +115,7 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 		for !c.Stop {
 			c.Layout(nil, co.Size())
 			<-tick.C
-			c.CountdownDown(&c.Countdown)
+			c.CountdownDown()
 			c.TimeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
 		}
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
@@ -127,12 +127,12 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 	}()
 }
 
-func (c *Pomodoro) CountdownDown(cd *Countdown) {
-	cd.Second--
-	if cd.Minute >= 1 && cd.Second <= 0 {
-		cd.Minute--
-		cd.Second = 59
-	} else if cd.Minute == 0 && cd.Second <= 0 {
+func (c *Pomodoro) CountdownDown() {
+	c.Countdown.Second--
+	if c.Countdown.Minute >= 1 && c.Countdown.Second <= 0 {
+		c.Countdown.Minute--
+		c.Countdown.Second = 59
+	} else if c.Countdown.Minute == 0 && c.Countdown.Second <= 0 {
 		c.Stop = true
 	}
 }
