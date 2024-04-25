@@ -1,8 +1,8 @@
 # TODO
 
 ## Version 5
-- Modify the icon to v5
-- Modify the Build for v5
+- x Modify the icon to v5
+- x Modify the Build for v5
 - Add a way to disable sound 
 - Add a way to disable notification
 - Setup preference for saving notification and sound preference

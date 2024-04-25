@@ -3,8 +3,8 @@
 BINARY_NAME="Go Pomodoro.app"
 APP_NAME="Go Pomodoro"
 APP_ID="ch.mauricext4fs.gopomodoro"
-VERSION=3.0.0
-BUILD_NO=3
+VERSION=5.0.0
+BUILD_NO=5
 
 ## build: build binary and package app
 build:
