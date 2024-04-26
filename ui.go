@@ -5,6 +5,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
@@ -74,13 +75,23 @@ func (clock *Pomodoro) Show() fyne.CanvasObject {
 		clock.Reset(clock.MainWindow, "Go 🍅")
 	})
 
+	clock.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	clock.SoundSlider = widget.NewSlider(0, 1)
+	clock.NotificationSliderLabel = widget.NewLabelWithStyle("Notification:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	clock.NotificationSlider = widget.NewSlider(0, 1)
 
 	content.Add(clock.StartStopButton)
 	content.Add(clock.Start5MinuteBreakButton)
 	content.Add(clock.Start20MinuteBreakButton)
 	content.Add(clock.ResetButton)
-	content.Add(clock.SoundSlider)
+
+	content.Add(layout.NewSpacer())
+	content.Add(container.New(
+		layout.NewGridLayout(2),
+		clock.SoundSliderLabel,
+		clock.NotificationSliderLabel,
+		clock.SoundSlider,
+		clock.NotificationSlider))
 
 	clock.Reset(clock.MainWindow, "Go 🍅")
 

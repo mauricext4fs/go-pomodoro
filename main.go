@@ -24,7 +24,10 @@ type Pomodoro struct {
 	Start5MinuteBreakButton  *widget.Button
 	Start20MinuteBreakButton *widget.Button
 	ResetButton              *widget.Button
+	SoundSliderLabel         *widget.Label
 	SoundSlider              *widget.Slider
+	NotificationSliderLabel  *widget.Label
+	NotificationSlider       *widget.Slider
 	Countdown                Countdown
 	Stop                     bool
 }
@@ -42,7 +45,7 @@ func main() {
 
 	// Window
 	p.MainWindow = a.NewWindow("Go 🍅")
-	p.MainWindow.Resize(fyne.Size{Width: 290, Height: 275})
+	p.MainWindow.Resize(fyne.Size{Width: 290, Height: 350})
 	p.MainWindow.CenterOnScreen()
 	p.MainWindow.SetMaster()
 
