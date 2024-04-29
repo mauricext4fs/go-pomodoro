@@ -54,7 +54,6 @@ func main() {
 		a.SetIcon(tomatoeIcon)
 	}
 	if desk, ok := a.(desktop.App); ok {
-		log.Println("On Desktop!!")
 		p.MainWindow.SetCloseIntercept(func() {
 			p.MainWindow.Hide()
 		})
@@ -123,9 +122,14 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			c.TimeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
 		}
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
-			n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
-			app.New().SendNotification(n)
-			PlayNotificationSound()
+			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
+				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
+				app.New().SendNotification(n)
+			}
+
+			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
+				PlayNotificationSound()
+			}
 			c.Reset(win, "Go 🍅")
 		}
 	}()
