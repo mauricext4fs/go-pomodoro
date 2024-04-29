@@ -75,6 +75,9 @@ func (clock *Pomodoro) Show() fyne.CanvasObject {
 	clock.ResetButton = widget.NewButton("Reset ", func() {
 		clock.Reset(clock.MainWindow, "Go 🍅")
 	})
+	clock.QuitButton = widget.NewButton("Quit ", func() {
+		clock.App.Quit()
+	})
 
 	clock.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	clock.SoundSlider = widget.NewSlider(0, 1)
@@ -87,6 +90,7 @@ func (clock *Pomodoro) Show() fyne.CanvasObject {
 	content.Add(clock.Start5MinuteBreakButton)
 	content.Add(clock.Start20MinuteBreakButton)
 	content.Add(clock.ResetButton)
+	content.Add(clock.QuitButton)
 
 	content.Add(layout.NewSpacer())
 	content.Add(container.New(

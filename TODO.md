@@ -6,18 +6,18 @@
 - x Add a way to disable sound 
 - x Add a way to disable notification
 - x Setup preference for saving notification and sound preference
-- Add a quit button
-- Start Apple dev process to get App store build
+- x Add a quit button
 - x Refactor CountDown method 
-- Refactor playNotificationSound
-- BUG: Notification icon is incorrect
 
 ## Version 6
 
+- Refactor playNotificationSound
+- Start Apple dev process to get App store build
 - Add "About" item in menu
 - Investigate what is need to make it work for iOS
 - Add counter for completed Pomodoro
 - BUG: Check and replace the log.Fatal so it's not crashing Fyne
+- BUG: Notification icon is incorrect
 
 ## Version 7 / 8
 
