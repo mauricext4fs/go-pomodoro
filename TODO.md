@@ -4,10 +4,12 @@
 
 - x Start Apple dev process to get App store build
 - v6 icon 
-- Update build for v6
+- Update Makefile for v6
+- Migrate build.sh to use notarytool instead of altool
 - Try to get the countdown font bigger
 - Refactor playNotificationSound
 - Add "About" item in menu
+- BUG: Notification still make the app crash on Intel
 - BUG: Check and replace the log.Fatal so it's not crashing Fyne
 - BUG: Notification icon is incorrect
 
