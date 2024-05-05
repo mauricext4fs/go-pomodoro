@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/layout"
@@ -11,39 +12,35 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-type MyTheme struct{}
-
-var _ fyne.Theme = (*MyTheme)(nil)
-
-func (m MyTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
-	if name == theme.ColorNameBackground {
-		if variant == theme.VariantLight {
-			return color.White
-		}
-		return color.Black
-	}
-	return theme.DefaultTheme().Color(name, variant)
+type CustomText struct {
+	canvas.Text
 }
 
-func (m MyTheme) Icon(name fyne.ThemeIconName) fyne.Resource {
+var _ fyne.CanvasObject = (*CustomText)(nil)
 
-	return theme.DefaultTheme().Icon(name)
+func NewCustomText(text string, color color.Color) *CustomText {
+	size := fyne.CurrentApp().Settings().Theme().Size("custom_text")
+	nct := &CustomText{}
+	nct.Text.Text = text
+	nct.Text.TextSize = size
+	nct.Color = color
+
+	return nct
 }
 
-func (m MyTheme) Font(style fyne.TextStyle) fyne.Resource {
-	return theme.DefaultTheme().Font(style)
+func (t *CustomText) UpdateText(text string) {
+	t.Text.Text = text
+	t.Text.Refresh()
 }
 
-func (m MyTheme) Size(name fyne.ThemeSizeName) float32 {
-	//return 22
-	return theme.DefaultTheme().Size(name)
-}
+func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
-func (clock *Pomodoro) Show() fyne.CanvasObject {
-	clock.TimeLabel = widget.NewLabelWithStyle("25 Minutes", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-	clock.TimeLabel.Importance = widget.HighImportance
+	clock.CountDownText = NewCustomText("25 Minutes", &color.RGBA{0, 0, 255, 255})
+	clock.CountDownText.TextStyle.Bold = true
+	clock.CountDownText.Alignment = fyne.TextAlignCenter
 
 	content := clock.Render()
+
 	clock.StartStopButton = widget.NewButton("Start 🍅", func() {
 		if clock.Stop {
 			fyne.Window.SetTitle(clock.MainWindow, "Go 🍅: Pomodoro running")
@@ -86,6 +83,8 @@ func (clock *Pomodoro) Show() fyne.CanvasObject {
 	clock.NotificationSlider = widget.NewSlider(0, 1)
 	clock.NotificationSlider.Bind(binding.BindPreferenceFloat("withNotification", clock.App.Preferences()))
 
+	content.Add(layout.NewSpacer())
+
 	content.Add(clock.StartStopButton)
 	content.Add(clock.Start5MinuteBreakButton)
 	content.Add(clock.Start20MinuteBreakButton)
@@ -117,7 +116,7 @@ func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
 
 func (c *Pomodoro) Render() *fyne.Container {
 
-	co := container.NewVBox(c.TimeLabel)
+	co := container.NewVBox(&c.CountDownText.Text)
 
 	return co
 }

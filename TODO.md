@@ -3,6 +3,7 @@
 ## Version 6
 
 - x Start Apple dev process to get App store build
+- Export Apple dev keychain to Macbook Air
 - x v6 icon 
 - x Update Makefile for v6
 - Try to get the countdown font bigger

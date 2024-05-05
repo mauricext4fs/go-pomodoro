@@ -19,7 +19,7 @@ import (
 type Pomodoro struct {
 	App                      fyne.App
 	MainWindow               fyne.Window
-	TimeLabel                *widget.Label
+	CountDownText            *CustomText
 	StartStopButton          *widget.Button
 	Start5MinuteBreakButton  *widget.Button
 	Start20MinuteBreakButton *widget.Button
@@ -70,7 +70,8 @@ func main() {
 	}
 	c := container.NewStack()
 	//c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
-	c.Objects = []fyne.CanvasObject{p.Show()}
+	//c.Objects = []fyne.CanvasObject{p.Show(c)}
+	c.Add(p.Show(c))
 
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
@@ -105,7 +106,7 @@ func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	time.Sleep(1 * time.Second)
 	c.Countdown.Minute = 24
 	c.Countdown.Second = 59
-	c.TimeLabel.SetText("25 Minutes")
+	c.CountDownText.UpdateText("25 Minutes")
 
 	c.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
@@ -120,7 +121,7 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			c.Layout(nil, co.Size())
 			<-tick.C
 			c.CountdownDown()
-			c.TimeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
+			c.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
 		}
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
 			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
