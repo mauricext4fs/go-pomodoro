@@ -62,10 +62,7 @@ func main() {
 				p.MainWindow.Show()
 			}))
 		desk.SetSystemTrayMenu(m)
-		tomatoeSystrayIcon, err := fyne.LoadResourceFromPath("icon_systray.png")
-		if err == nil {
-			desk.SetSystemTrayIcon(tomatoeSystrayIcon)
-		}
+		desk.SetSystemTrayIcon(resourceIconsystrayPng)
 	}
 	c := container.NewStack()
 	//c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
@@ -77,7 +74,8 @@ func main() {
 }
 
 func PlayNotificationSound() {
-	f, err := os.Open("notification.wav")
+	notificationSound := resourceNotificationWav.StaticName
+	f, err := os.Open(notificationSound)
 	if err != nil {
 		log.Fatal("Error: ", err)
 	}

@@ -7,8 +7,8 @@
 - x v6 icon 
 - x Update Makefile for v6
 - x Try to get the countdown font bigger
-- Investigate and add fyne asset bundling logic so the DMG will not crashing
-- Remove dmg from Version 5 as it crash everywhere
+- x Investigate and add fyne asset bundling logic so the DMG will not crash
+- x Remove dmg from Version 5 as it crash everywhere
 - Migrate build.sh to use notarytool instead of altool
 - Refactor playNotificationSound
 - 
@@ -20,6 +20,7 @@
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
 - Investigate what is need to make it work for iOS
 - Add Clock Animation
+- Try to make it work for Linux
 - Try to make it work for Windows
 - Add History with custom label (work, study, etc...)
 - Fix Theme (Font size and color, x Alignment, etc...)
