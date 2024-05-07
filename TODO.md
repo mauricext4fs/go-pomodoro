@@ -7,13 +7,17 @@
 - x v6 icon 
 - x Update Makefile for v6
 - x Try to get the countdown font bigger
+- Investigate and add fyne asset bundling logic so the DMG will not crashing
+- Remove dmg from Version 5 as it crash everywhere
+- Migrate build.sh to use notarytool instead of altool
 - Refactor playNotificationSound
-- Add "About" item in menu
+- 
 
 ## Version 7 / 8
 
 - Add counter for completed Pomodoro
-- Migrate build.sh to use notarytool instead of altool
+- Add "About" item in menu
+- Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
 - Investigate what is need to make it work for iOS
 - Add Clock Animation
 - Try to make it work for Windows
