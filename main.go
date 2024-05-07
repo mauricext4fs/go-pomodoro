@@ -50,10 +50,9 @@ func main() {
 	p.MainWindow.CenterOnScreen()
 	p.MainWindow.SetMaster()
 
-	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
-	if err == nil {
-		a.SetIcon(tomatoeIcon)
-	}
+	tomatoeIcon := resourceIconPng
+	a.SetIcon(tomatoeIcon)
+
 	if desk, ok := a.(desktop.App); ok {
 		p.MainWindow.SetCloseIntercept(func() {
 			p.MainWindow.Hide()

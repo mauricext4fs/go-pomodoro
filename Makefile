@@ -14,6 +14,12 @@ build:
 	cp icon_systray.png Go\ Pomodoro.app/Contents/Resources/
 	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
 
+bundle:
+	@echo "Bundling ressource into bundled.go"
+	fyne bundle -o bundled.go icon.png
+	fyne bundle -o bundled.go -append icon_systray.png
+	fyne bundle -o bundled.go -append notification.wav
+
 ## run: builds and runs the application
 run:
 	env DB_PATH="./sql.db" go run -v .

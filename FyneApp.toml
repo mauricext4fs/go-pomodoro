@@ -4,5 +4,5 @@ Website = "https://github.com/mauricext4fs/go-pomodoro"
   Icon = "icon.png"
   Name = "Go Pomodoro"
   ID = "ch.mauricext4fs.gopomodoro"
-  Version = "5.0.0"
-  Build = 65
+  Version = "6.0.0"
+  Build = 66
