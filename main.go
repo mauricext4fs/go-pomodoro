@@ -1,5 +1,9 @@
 package main
 
+//go:generate fyne bundle -o bundled.go icon.png
+//go:generate fyne bundle -o bundled.go -append icon_systray.png
+//go:generate fyne bundle -o bundled.go -append notification.wav
+
 import (
 	"fmt"
 	"log"
@@ -65,35 +69,30 @@ func main() {
 		desk.SetSystemTrayIcon(resourceIconsystrayPng)
 	}
 	c := container.NewStack()
-	//c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
-	//c.Objects = []fyne.CanvasObject{p.Show(c)}
 	c.Add(p.Show(c))
 
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
 }
 
-func PlayNotificationSound() {
+func (c *Pomodoro) PlayNotificationSound() {
+	// Assignment is required otherwise no conversion is made in os.Open
 	notificationSound := resourceNotificationWav.StaticName
 	f, err := os.Open(notificationSound)
 	if err != nil {
 		log.Fatal("Error: ", err)
 	}
-
 	streamer, format, err := wav.Decode(f)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer streamer.Close()
 
 	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-
 	done := make(chan bool)
 	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
 		done <- true
 	})))
-
 	<-done
 }
 
@@ -121,14 +120,16 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			c.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
 		}
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
+
+			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
+				c.PlayNotificationSound()
+			}
+
 			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
 				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 				app.New().SendNotification(n)
 			}
 
-			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
-				PlayNotificationSound()
-			}
 			c.Reset(win, "Go 🍅")
 		}
 	}()

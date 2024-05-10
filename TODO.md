@@ -9,12 +9,15 @@
 - x Try to get the countdown font bigger
 - x Investigate and add fyne asset bundling logic so the DMG will not crash
 - x Remove dmg from Version 5 as it crash everywhere
-- Migrate build.sh to use notarytool instead of altool
-- Refactor playNotificationSound
-- 
+- Replace color of Countdown text to the same as fyne.important
+- x !!! Refactor playNotificationSound: 
+    Not going to do it... beep lib does not make it easy at all to do this right.
 
 ## Version 7 / 8
 
+- Migrate build.sh to use notarytool instead of altool
+- Find how to enable notification in dmg (notarytool)
+- BUG: Both notification and sounds crash from dmg
 - Add counter for completed Pomodoro
 - Add "About" item in menu
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
