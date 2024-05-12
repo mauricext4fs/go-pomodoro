@@ -18,12 +18,12 @@ type CustomText struct {
 
 var _ fyne.CanvasObject = (*CustomText)(nil)
 
-func NewCustomText(text string, color color.Color) *CustomText {
+func NewCustomText(text string, c color.Color) *CustomText {
 	size := fyne.CurrentApp().Settings().Theme().Size("custom_text")
 	nct := &CustomText{}
 	nct.Text.Text = text
 	nct.Text.TextSize = size
-	nct.Color = color
+	nct.Text.Color = c
 
 	return nct
 }
@@ -35,8 +35,9 @@ func (t *CustomText) UpdateText(text string) {
 
 func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
-	clock.CountDownText = NewCustomText("25 Minutes", &color.RGBA{0, 0, 255, 255})
+	clock.CountDownText = NewCustomText("25 Minutes", &color.RGBA{0, 109, 255, 255})
 	clock.CountDownText.TextStyle.Bold = true
+	clock.CountDownText.TextStyle.Monospace = true
 	clock.CountDownText.Alignment = fyne.TextAlignCenter
 
 	content := clock.Render()

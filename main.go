@@ -6,8 +6,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -15,9 +13,6 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/widget"
-	"github.com/gopxl/beep"
-	"github.com/gopxl/beep/speaker"
-	"github.com/gopxl/beep/wav"
 )
 
 type Pomodoro struct {
@@ -75,27 +70,6 @@ func main() {
 	p.MainWindow.ShowAndRun()
 }
 
-func (c *Pomodoro) PlayNotificationSound() {
-	// Assignment is required otherwise no conversion is made in os.Open
-	notificationSound := resourceNotificationWav.StaticName
-	f, err := os.Open(notificationSound)
-	if err != nil {
-		log.Fatal("Error: ", err)
-	}
-	streamer, format, err := wav.Decode(f)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer streamer.Close()
-
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-	done := make(chan bool)
-	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
-		done <- true
-	})))
-	<-done
-}
-
 func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
 	c.Stop = true
@@ -122,7 +96,7 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
 
 			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
-				c.PlayNotificationSound()
+				PlayNotificationSound()
 			}
 
 			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
