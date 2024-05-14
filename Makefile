@@ -33,7 +33,7 @@ clean:
 	@echo "Cleaning..."
 	@go clean
 	@rm -rf ${BINARY_NAME}
-	@rm -rf package/
+	@rm -rf package/*
 	@echo "Cleaned!"
 
 
