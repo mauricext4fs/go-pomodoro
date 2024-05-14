@@ -11,15 +11,21 @@
 - x Remove dmg from Version 5 as it crash everywhere
 - x Replace color of Countdown text to the same as fyne.important
 - x BUG: dmg Notification crash app
-- BUG: Notification still make the app crash on Intel
+- x BUG: Notification still make the app crash on Intel
 - x !!! Refactor playNotificationSound: 
     Not going to do it... beep lib does not make it easy at all to do this right.
-- BUG: Name of binary in build dmg is wrong
+- x Resample the notification sound (maybe that will lower the amount of debug output)
+- x BUG: Name of binary in build dmg is wrong
+- x Find how to enable notification in dmg (notarytool)
+- x Migrate build.sh to use notarytool instead of altool
+- x BUG: dmg Sound crash app (stupidly... the .wav must still be packed in the .app dir)
+- x BUG: Notification icon is incorrect
+- x BUG: Sometime the app just close by itself without crash report
+			 This seems to happened often after the end of a Pomodoro (on notification). 
+			 Seems to have gotten especially worse since adding the systray icon. 
 
 ## Version 7 / 8
 
-- Find how to enable notification in dmg (notarytool)
-- Migrate build.sh to use notarytool instead of altool
 - Add counter for completed Pomodoro
 - Add "About" item in menu
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
@@ -29,11 +35,5 @@
 - Try to make it work for Linux
 - Try to make it work for Windows
 - Add History with custom label (work, study, etc...)
-- BUG: dmg Sound crash app
-- BUG: Check and replace the log.Fatal so it's not crashing Fyne
-- BUG: Notification icon is incorrect
 - BUG: 0 Second missing
-- BUG: Sometime the app just close by itself without crash report
-			 This seems to happened often after the end of a Pomodoro (on notification). 
-			 Seems to have gotten especially worse since adding the systray icon. 
 
