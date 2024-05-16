@@ -23,11 +23,12 @@
 - x BUG: Sometime the app just close by itself without crash report
 			 This seems to happened often after the end of a Pomodoro (on notification). 
 			 Seems to have gotten especially worse since adding the systray icon. 
-- Create .env and get build.sh in git (without the sensitive info)
+- x Create .env and get build.sh in git (without the sensitive info)
 
 ## Version 7 / 8
 
 - Find a way to use FyneApp info in Makefile
+- Improve Notification msg
 - Add counter for completed Pomodoro
 - Add "About" item in menu
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
