@@ -12,6 +12,21 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+type UIElements struct {
+	CountDownText            *CustomText
+	CountDownMinute          *CustomText
+	CountDownSecond          *CustomText
+	StartStopButton          *widget.Button
+	Start5MinuteBreakButton  *widget.Button
+	Start20MinuteBreakButton *widget.Button
+	ResetButton              *widget.Button
+	QuitButton               *widget.Button
+	SoundSliderLabel         *widget.Label
+	SoundSlider              *widget.Slider
+	NotificationSliderLabel  *widget.Label
+	NotificationSlider       *widget.Slider
+}
+
 type CustomText struct {
 	canvas.Text
 }

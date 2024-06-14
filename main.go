@@ -18,6 +18,7 @@ import (
 type Pomodoro struct {
 	App                      fyne.App
 	MainWindow               fyne.Window
+	UIElements               UIElements
 	CountDownText            *CustomText
 	StartStopButton          *widget.Button
 	Start5MinuteBreakButton  *widget.Button
