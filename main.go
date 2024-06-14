@@ -60,51 +60,51 @@ func main() {
 	p.MainWindow.ShowAndRun()
 }
 
-func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
+func (p *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
-	c.Stop = true
+	p.Stop = true
 	time.Sleep(1 * time.Second)
-	c.Countdown.Minute = 24
-	c.Countdown.Second = 59
-	c.UIElements.CountDownText.UpdateText("25 Minutes")
+	p.Countdown.Minute = 24
+	p.Countdown.Second = 59
+	p.UIElements.CountDownText.UpdateText("25 Minutes")
 
-	c.UpdateStartStopButton("Start 🍅", false)
+	p.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
 		fyne.Window.SetTitle(win, newTitle)
 	}
 }
 
-func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
+func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 	tick := time.NewTicker(time.Second)
 	go func() {
-		for !c.Stop {
-			c.Layout(nil, co.Size())
+		for !p.Stop {
+			p.Layout(nil, co.Size())
 			<-tick.C
-			c.CountdownDown()
-			c.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
+			p.CountdownDown()
+			p.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", p.Countdown.Minute, p.Countdown.Second))
 		}
-		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
+		if p.Countdown.Minute == 0 && p.Countdown.Second == 0 {
 
-			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
+			if p.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
 				PlayNotificationSound()
 			}
 
-			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
+			if p.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
 				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 				app.New().SendNotification(n)
 			}
 
-			c.Reset(win, "Go 🍅")
+			p.Reset(win, "Go 🍅")
 		}
 	}()
 }
 
-func (c *Pomodoro) CountdownDown() {
-	c.Countdown.Second--
-	if c.Countdown.Minute >= 1 && c.Countdown.Second <= 0 {
-		c.Countdown.Minute--
-		c.Countdown.Second = 59
-	} else if c.Countdown.Minute == 0 && c.Countdown.Second <= 0 {
-		c.Stop = true
+func (p *Pomodoro) CountdownDown() {
+	p.Countdown.Second--
+	if p.Countdown.Minute >= 1 && p.Countdown.Second <= 0 {
+		p.Countdown.Minute--
+		p.Countdown.Second = 59
+	} else if p.Countdown.Minute == 0 && p.Countdown.Second <= 0 {
+		p.Stop = true
 	}
 }
