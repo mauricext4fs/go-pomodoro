@@ -50,14 +50,14 @@ func (t *CustomText) UpdateText(text string) {
 
 func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
-	clock.CountDownText = NewCustomText("25 Minutes", &color.RGBA{0, 109, 255, 255})
-	clock.CountDownText.TextStyle.Bold = true
-	clock.CountDownText.TextStyle.Monospace = true
-	clock.CountDownText.Alignment = fyne.TextAlignCenter
+	clock.UIElements.CountDownText = NewCustomText("25 Minutes", &color.RGBA{0, 109, 255, 255})
+	clock.UIElements.CountDownText.TextStyle.Bold = true
+	clock.UIElements.CountDownText.TextStyle.Monospace = true
+	clock.UIElements.CountDownText.Alignment = fyne.TextAlignCenter
 
 	content := clock.Render()
 
-	clock.StartStopButton = widget.NewButton("Start 🍅", func() {
+	clock.UIElements.StartStopButton = widget.NewButton("Start 🍅", func() {
 		if clock.Stop {
 			fyne.Window.SetTitle(clock.MainWindow, "Go 🍅: Pomodoro running")
 			clock.UpdateStartStopButton("", true)
@@ -69,7 +69,7 @@ func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 			clock.Stop = true
 		}
 	})
-	clock.Start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
+	clock.UIElements.Start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
 		clock.Reset(clock.MainWindow, "Go 🍅: 5 Minutes pause running")
 		clock.Countdown.Minute = 5
 		clock.Countdown.Second = 0
@@ -77,7 +77,7 @@ func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		clock.Stop = false
 		go clock.Animate(content, clock.MainWindow)
 	})
-	clock.Start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
+	clock.UIElements.Start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
 		clock.Reset(clock.MainWindow, "Go 🍅: 20 Minutes pause running")
 		clock.Countdown.Minute = 20
 		clock.Countdown.Second = 00
@@ -85,35 +85,35 @@ func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		clock.Stop = false
 		go clock.Animate(content, clock.MainWindow)
 	})
-	clock.ResetButton = widget.NewButton("Reset ", func() {
+	clock.UIElements.ResetButton = widget.NewButton("Reset ", func() {
 		clock.Reset(clock.MainWindow, "Go 🍅")
 	})
-	clock.QuitButton = widget.NewButton("Quit ", func() {
+	clock.UIElements.QuitButton = widget.NewButton("Quit ", func() {
 		clock.App.Quit()
 	})
 
-	clock.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-	clock.SoundSlider = widget.NewSlider(0, 1)
-	clock.SoundSlider.Bind(binding.BindPreferenceFloat("withSound", clock.App.Preferences()))
-	clock.NotificationSliderLabel = widget.NewLabelWithStyle("Notification:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-	clock.NotificationSlider = widget.NewSlider(0, 1)
-	clock.NotificationSlider.Bind(binding.BindPreferenceFloat("withNotification", clock.App.Preferences()))
+	clock.UIElements.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	clock.UIElements.SoundSlider = widget.NewSlider(0, 1)
+	clock.UIElements.SoundSlider.Bind(binding.BindPreferenceFloat("withSound", clock.App.Preferences()))
+	clock.UIElements.NotificationSliderLabel = widget.NewLabelWithStyle("Notification:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	clock.UIElements.NotificationSlider = widget.NewSlider(0, 1)
+	clock.UIElements.NotificationSlider.Bind(binding.BindPreferenceFloat("withNotification", clock.App.Preferences()))
 
 	content.Add(layout.NewSpacer())
 
-	content.Add(clock.StartStopButton)
-	content.Add(clock.Start5MinuteBreakButton)
-	content.Add(clock.Start20MinuteBreakButton)
-	content.Add(clock.ResetButton)
-	content.Add(clock.QuitButton)
+	content.Add(clock.UIElements.StartStopButton)
+	content.Add(clock.UIElements.Start5MinuteBreakButton)
+	content.Add(clock.UIElements.Start20MinuteBreakButton)
+	content.Add(clock.UIElements.ResetButton)
+	content.Add(clock.UIElements.QuitButton)
 
 	content.Add(layout.NewSpacer())
 	content.Add(container.New(
 		layout.NewGridLayout(2),
-		clock.SoundSliderLabel,
-		clock.NotificationSliderLabel,
-		clock.SoundSlider,
-		clock.NotificationSlider))
+		clock.UIElements.SoundSliderLabel,
+		clock.UIElements.NotificationSliderLabel,
+		clock.UIElements.SoundSlider,
+		clock.UIElements.NotificationSlider))
 
 	clock.Reset(clock.MainWindow, "Go 🍅")
 
@@ -123,16 +123,16 @@ func (clock *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
 func (c *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
 	if withPauseIcon {
-		c.StartStopButton.SetIcon(theme.MediaPauseIcon())
+		c.UIElements.StartStopButton.SetIcon(theme.MediaPauseIcon())
 	} else {
-		c.StartStopButton.SetIcon(nil)
+		c.UIElements.StartStopButton.SetIcon(nil)
 	}
-	c.StartStopButton.SetText(msg)
+	c.UIElements.StartStopButton.SetText(msg)
 }
 
 func (c *Pomodoro) Render() *fyne.Container {
 
-	co := container.NewVBox(&c.CountDownText.Text)
+	co := container.NewVBox(&c.UIElements.CountDownText.Text)
 
 	return co
 }

@@ -12,25 +12,14 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/widget"
 )
 
 type Pomodoro struct {
-	App                      fyne.App
-	MainWindow               fyne.Window
-	UIElements               UIElements
-	CountDownText            *CustomText
-	StartStopButton          *widget.Button
-	Start5MinuteBreakButton  *widget.Button
-	Start20MinuteBreakButton *widget.Button
-	ResetButton              *widget.Button
-	QuitButton               *widget.Button
-	SoundSliderLabel         *widget.Label
-	SoundSlider              *widget.Slider
-	NotificationSliderLabel  *widget.Label
-	NotificationSlider       *widget.Slider
-	Countdown                Countdown
-	Stop                     bool
+	App        fyne.App
+	MainWindow fyne.Window
+	UIElements UIElements
+	Countdown  Countdown
+	Stop       bool
 }
 
 type Countdown struct {
@@ -77,7 +66,7 @@ func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	time.Sleep(1 * time.Second)
 	c.Countdown.Minute = 24
 	c.Countdown.Second = 59
-	c.CountDownText.UpdateText("25 Minutes")
+	c.UIElements.CountDownText.UpdateText("25 Minutes")
 
 	c.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
@@ -92,7 +81,7 @@ func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			c.Layout(nil, co.Size())
 			<-tick.C
 			c.CountdownDown()
-			c.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
+			c.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
 		}
 		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
 
