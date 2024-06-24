@@ -1,36 +1,25 @@
 package main
 
+//go:generate fyne bundle -o bundled.go icon.png
+//go:generate fyne bundle -o bundled.go -append icon_systray.png
+//go:generate fyne bundle -o bundled.go -append notification.wav
+
 import (
 	"fmt"
-	"log"
-	"os"
 	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
-	"fyne.io/fyne/v2/widget"
-	"github.com/gopxl/beep"
-	"github.com/gopxl/beep/speaker"
-	"github.com/gopxl/beep/wav"
 )
 
 type Pomodoro struct {
-	App                      fyne.App
-	MainWindow               fyne.Window
-	TimeLabel                *widget.Label
-	StartStopButton          *widget.Button
-	Start5MinuteBreakButton  *widget.Button
-	Start20MinuteBreakButton *widget.Button
-	ResetButton              *widget.Button
-	QuitButton               *widget.Button
-	SoundSliderLabel         *widget.Label
-	SoundSlider              *widget.Slider
-	NotificationSliderLabel  *widget.Label
-	NotificationSlider       *widget.Slider
-	Countdown                Countdown
-	Stop                     bool
+	App        fyne.App
+	MainWindow fyne.Window
+	UIElements UIElements
+	Countdown  Countdown
+	Stop       bool
 }
 
 type Countdown struct {
@@ -50,10 +39,9 @@ func main() {
 	p.MainWindow.CenterOnScreen()
 	p.MainWindow.SetMaster()
 
-	tomatoeIcon, err := fyne.LoadResourceFromPath("icon.png")
-	if err == nil {
-		a.SetIcon(tomatoeIcon)
-	}
+	tomatoeIcon := resourceIconPng
+	a.SetIcon(tomatoeIcon)
+
 	if desk, ok := a.(desktop.App); ok {
 		p.MainWindow.SetCloseIntercept(func() {
 			p.MainWindow.Hide()
@@ -63,85 +51,60 @@ func main() {
 				p.MainWindow.Show()
 			}))
 		desk.SetSystemTrayMenu(m)
-		tomatoeSystrayIcon, err := fyne.LoadResourceFromPath("icon_systray.png")
-		if err == nil {
-			desk.SetSystemTrayIcon(tomatoeSystrayIcon)
-		}
+		desk.SetSystemTrayIcon(resourceIconsystrayPng)
 	}
 	c := container.NewStack()
-	//c.Objects = []fyne.CanvasObject{Show(p.MainWindow)}
-	c.Objects = []fyne.CanvasObject{p.Show()}
+	c.Add(p.Show(c))
 
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
 }
 
-func PlayNotificationSound() {
-	f, err := os.Open("notification.wav")
-	if err != nil {
-		log.Fatal("Error: ", err)
-	}
-
-	streamer, format, err := wav.Decode(f)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer streamer.Close()
-
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-
-	done := make(chan bool)
-	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
-		done <- true
-	})))
-
-	<-done
-}
-
-func (c *Pomodoro) Reset(win fyne.Window, newTitle string) {
+func (p *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	// Stop any existing counter (if any)
-	c.Stop = true
+	p.Stop = true
 	time.Sleep(1 * time.Second)
-	c.Countdown.Minute = 24
-	c.Countdown.Second = 59
-	c.TimeLabel.SetText("25 Minutes")
+	p.Countdown.Minute = 24
+	p.Countdown.Second = 59
+	p.UIElements.CountDownText.UpdateText("25 Minutes")
 
-	c.UpdateStartStopButton("Start 🍅", false)
+	p.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
 		fyne.Window.SetTitle(win, newTitle)
 	}
 }
 
-func (c *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
+func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 	tick := time.NewTicker(time.Second)
 	go func() {
-		for !c.Stop {
-			c.Layout(nil, co.Size())
+		for !p.Stop {
+			p.Layout(nil, co.Size())
 			<-tick.C
-			c.CountdownDown()
-			c.TimeLabel.SetText(fmt.Sprintf("%d Minutes and %d Seconds", c.Countdown.Minute, c.Countdown.Second))
+			p.CountdownDown()
+			p.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", p.Countdown.Minute, p.Countdown.Second))
 		}
-		if c.Countdown.Minute == 0 && c.Countdown.Second == 0 {
-			if c.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
+		if p.Countdown.Minute == 0 && p.Countdown.Second == 0 {
+
+			if p.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
+				PlayNotificationSound()
+			}
+
+			if p.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
 				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 				app.New().SendNotification(n)
 			}
 
-			if c.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
-				PlayNotificationSound()
-			}
-			c.Reset(win, "Go 🍅")
+			p.Reset(win, "Go 🍅")
 		}
 	}()
 }
 
-func (c *Pomodoro) CountdownDown() {
-	c.Countdown.Second--
-	if c.Countdown.Minute >= 1 && c.Countdown.Second <= 0 {
-		c.Countdown.Minute--
-		c.Countdown.Second = 59
-	} else if c.Countdown.Minute == 0 && c.Countdown.Second <= 0 {
-		c.Stop = true
+func (p *Pomodoro) CountdownDown() {
+	p.Countdown.Second--
+	if p.Countdown.Minute >= 1 && p.Countdown.Second <= 0 {
+		p.Countdown.Minute--
+		p.Countdown.Second = 59
+	} else if p.Countdown.Minute == 0 && p.Countdown.Second <= 0 {
+		p.Stop = true
 	}
 }
