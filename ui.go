@@ -14,8 +14,6 @@ import (
 
 type UIElements struct {
 	CountDownText            *CustomText
-	CountDownMinute          *CustomText
-	CountDownSecond          *CustomText
 	StartStopButton          *widget.Button
 	Start5MinuteBreakButton  *widget.Button
 	Start20MinuteBreakButton *widget.Button
