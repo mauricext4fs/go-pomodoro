@@ -13,9 +13,15 @@
 *.dylib
 Go Pomodoro.app
 Go Pomodoro*.dmg
+Go_Pomodoro*
+Go-Pomodoro*
 
 # Test binary, built with `go test -c`
 *.test
+testdata
+
+# DB File
+*.db
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
