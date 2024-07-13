@@ -31,9 +31,9 @@ func (repo *SQLiteRepository) Migrate() error {
 		type text not null
 	);
 	
-	INSERT INTO activity_type (id, title, type) VALUES (100, 'Standard Pomodoro (25 Minutes)', 'Pomodoro');
-	INSERT INTO activity_type (id, title, type) VALUES (200, '5 Minutes Break', 'Break');
-	INSERT INTO activity_type (id, title, type) VALUES (500, '20 Minutes Break', 'Break');
+	INSERT OR IGNORE INTO activity_type (id, title, type) VALUES (100, 'Standard Pomodoro (25 Minutes)', 'Pomodoro');
+	INSERT OR IGNORE INTO activity_type (id, title, type) VALUES (200, '5 Minutes Break', 'Break');
+	INSERT OR IGNORE INTO activity_type (id, title, type) VALUES (500, '20 Minutes Break', 'Break');
 	`
 
 	_, err := repo.Conn.Exec(query)
