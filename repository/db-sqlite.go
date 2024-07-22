@@ -88,6 +88,31 @@ func (repo *SQLiteRepository) AllActivities() ([]Activities, error) {
 	return all, nil
 }
 
+func (repo *SQLiteRepository) AllActivityType() ([]ActivityType, error) {
+	query := "SELECT id, title, type FROM activity_type ORDER BY id ASC"
+	rows, err := repo.Conn.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var all []ActivityType
+	for rows.Next() {
+		var a ActivityType
+		err := rows.Scan(
+			&a.ID,
+			&a.Title,
+			&a.Type,
+		)
+		if err != nil {
+			return nil, err
+		}
+		all = append(all, a)
+	}
+
+	return all, nil
+}
+
 func (repo *SQLiteRepository) GetActivityByID(id int) (*Activities, error) {
 	row := repo.Conn.QueryRow("SELECT id, activity_type, start_timestamp, end_timestamp FROM activities WHERE id = ?", id)
 

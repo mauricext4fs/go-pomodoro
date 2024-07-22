@@ -3,6 +3,8 @@ package repository
 import (
 	"testing"
 	"time"
+
+	"golang.org/x/exp/rand"
 )
 
 func TestSQLiteRepository_Migrate(t *testing.T) {
@@ -77,6 +79,42 @@ func TestSQLiteRepository_UpdateActivity(t *testing.T) {
 	}
 }
 
+func TestSQLiteRepository_FloodActivity(t *testing.T) {
+	a := Activities{
+		ActivityType:   200,
+		StartTimestamp: time.Now(),
+	}
+
+	at, err := testRepo.AllActivityType()
+	if err != nil {
+		t.Error("Error getting Activity Type: ", err)
+	}
+
+	if len(at) < 1 {
+		t.Error("No activityType found!")
+	}
+
+	for i := 1; i <= 2000; i++ {
+		result, err := testRepo.StartActivity(a)
+		if err != nil {
+			t.Error("insert failed:", err)
+		}
+
+		if result.ID <= 0 {
+			t.Error("invalid id sent back:", result.ID)
+		}
+
+		a.EndTimestamp = time.Now()
+		atIndex := rand.Intn(len(at))
+		a.ActivityType = at[atIndex].ID
+
+		err = testRepo.UpdateActivity(result.ID, a)
+		if err != nil {
+			t.Error("update failed:", err)
+		}
+	}
+}
+
 func TestSQLiteRepository_DeleteActivity(t *testing.T) {
 	err := testRepo.DeleteActivity(1)
 	if err != nil {
@@ -86,7 +124,7 @@ func TestSQLiteRepository_DeleteActivity(t *testing.T) {
 		}
 	}
 
-	err = testRepo.DeleteActivity(2)
+	err = testRepo.DeleteActivity(-4)
 	if err == nil {
 		t.Error("no error when trying to delete non-existend record")
 	}
