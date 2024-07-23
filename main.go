@@ -27,6 +27,7 @@ type Pomodoro struct {
 	UIElements UIElements
 	Countdown  Countdown
 	Stop       bool
+	ID         int64
 }
 
 type Countdown struct {
@@ -99,6 +100,10 @@ func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			p.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", p.Countdown.Minute, p.Countdown.Second))
 		}
 		if p.Countdown.Minute == 0 && p.Countdown.Second == 0 {
+			err := p.DB.UpdateActivity(p.ID, repository.Activities{ID: p.ID, EndTimestamp: time.Now()})
+			if err != nil {
+				log.Fatal("Error updating activity to sqlite DB: ", err)
+			}
 
 			if p.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
 				PlayNotificationSound()
