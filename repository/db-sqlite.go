@@ -88,6 +88,22 @@ func (repo *SQLiteRepository) AllActivities() ([]Activities, error) {
 	return all, nil
 }
 
+func (repo *SQLiteRepository) CountCompletedPomodoro() (int64, error) {
+  query := "SELECT COUNT(*) AS ct FROM Activities WHERE activity_type = 100 GROUP BY activity_type"
+  row := repo.Conn.QueryRow(query)
+
+	var a int64
+	err := row.Scan(
+		a,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return a, nil
+}
+
 func (repo *SQLiteRepository) AllActivityType() ([]ActivityType, error) {
 	query := "SELECT id, title, type FROM activity_type ORDER BY id ASC"
 	rows, err := repo.Conn.Query(query)
@@ -141,8 +157,8 @@ func (repo *SQLiteRepository) UpdateActivity(id int64, updated Activities) error
 		return errors.New("Invalid Updated ID")
 	}
 
-	stmt := "UPDATE activities SET activity_type = ?, end_timestamp = ? WHERE id = ?"
-	res, err := repo.Conn.Exec(stmt, updated.ActivityType, updated.EndTimestamp.Unix(), id)
+	stmt := "UPDATE activities SET end_timestamp = ? WHERE id = ?"
+	res, err := repo.Conn.Exec(stmt, updated.EndTimestamp.Unix(), id)
 
 	if err != nil {
 		return err
