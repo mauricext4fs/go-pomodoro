@@ -22,6 +22,7 @@ type UIElements struct {
 	Start20MinuteBreakButton *widget.Button
 	ResetButton              *widget.Button
 	QuitButton               *widget.Button
+	PomodoroCountLabel       *widget.Label
 	SoundSliderLabel         *widget.Label
 	SoundSlider              *widget.Slider
 	NotificationSliderLabel  *widget.Label
@@ -109,6 +110,9 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		p.App.Quit()
 	})
 
+	p.UIElements.PomodoroCountLabel = widget.NewLabelWithStyle("Completed Pomodoro: 0", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	p.UpdatePomodoroCount()
+
 	p.UIElements.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	p.UIElements.SoundSlider = widget.NewSlider(0, 1)
 	p.UIElements.SoundSlider.Bind(binding.BindPreferenceFloat("withSound", p.App.Preferences()))
@@ -125,6 +129,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 	content.Add(p.UIElements.QuitButton)
 
 	content.Add(layout.NewSpacer())
+	content.Add(p.UIElements.PomodoroCountLabel)
 	content.Add(container.New(
 		layout.NewGridLayout(2),
 		p.UIElements.SoundSliderLabel,

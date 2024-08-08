@@ -14,6 +14,7 @@ type Repository interface {
 	Migrate() error
 	StartActivity(a Activities) (*Activities, error)
 	AllActivities() ([]Activities, error)
+	CountCompletedPomodoro() (int64, error)
 	AllActivityType() ([]ActivityType, error)
 	GetActivityByID(id int) (*Activities, error)
 	UpdateActivity(id int64, updated Activities) error
@@ -25,6 +26,10 @@ type Activities struct {
 	ActivityType   int64     `json:"type"`
 	StartTimestamp time.Time `json:"start_timestamp"`
 	EndTimestamp   time.Time `json:"end_timestamp"`
+}
+
+type Count struct {
+	Count int64 `json:"id"`
 }
 
 type ActivityType struct {

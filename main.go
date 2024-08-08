@@ -90,6 +90,14 @@ func (p *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	}
 }
 
+func (p *Pomodoro) UpdatePomodoroCount() {
+	count, err := p.DB.CountCompletedPomodoro()
+	if err != nil {
+		log.Fatal("Error getting count of Pomodoro from sqlite DB: ", err)
+	}
+	p.UIElements.PomodoroCountLabel.SetText(fmt.Sprintf("Completed Pomodoro: %d", count))
+}
+
 func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 	tick := time.NewTicker(time.Second)
 	go func() {
@@ -104,6 +112,7 @@ func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			if err != nil {
 				log.Fatal("Error updating activity to sqlite DB: ", err)
 			}
+			p.UpdatePomodoroCount()
 
 			if p.App.Preferences().FloatWithFallback("withSound", 1) == 1 {
 				PlayNotificationSound()

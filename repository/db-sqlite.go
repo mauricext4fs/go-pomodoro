@@ -89,17 +89,19 @@ func (repo *SQLiteRepository) AllActivities() ([]Activities, error) {
 }
 
 func (repo *SQLiteRepository) CountCompletedPomodoro() (int64, error) {
-  query := "SELECT COUNT(*) AS ct FROM Activities WHERE activity_type = 100 GROUP BY activity_type"
-  row := repo.Conn.QueryRow(query)
+	query := "SELECT COUNT(*) as ct FROM Activities WHERE activity_type = 100 GROUP BY activity_type"
+	row := repo.Conn.QueryRow(query)
 
 	var a int64
+	var c Count
 	err := row.Scan(
-		a,
+		&c.Count,
 	)
 
 	if err != nil {
 		return 0, err
 	}
+	a = c.Count
 
 	return a, nil
 }
