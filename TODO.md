@@ -6,7 +6,7 @@
 - Improve Notification msg
 - x Add all DB logic for Pomodoro History with possibility for custom label
 - x Bug: Update Activity overwrite ActivityType
-- Add Count of finish Pomodoro 
+- x Add Count of finish Pomodoro 
 - Add test for UpdateCountPomodoro
 - Investigate what is need to make it work for iOS
 
