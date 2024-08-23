@@ -2,14 +2,17 @@
 
 ## Version 7
 
-- Find a way to use FyneApp info in Makefile
 - x Default Notification = Off
 - x Improve Notification msg
 - x Add all DB logic for Pomodoro History with possibility for custom label
 - x Bug: Update Activity overwrite ActivityType
 - x Add Count of finish Pomodoro 
 - Add test for UpdateCountPomodoro
-- Investigate what is need to make it work for iOS
+
+## Version 7.1.0
+
+- Find a way to use FyneApp info in Makefile
+- Investigate what is needed to make it work for iOS
 
 ## Version 8
 
