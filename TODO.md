@@ -3,6 +3,7 @@
 ## Version 7
 
 - Find a way to use FyneApp info in Makefile
+- Default Notification = Off
 - Improve Notification msg
 - x Add all DB logic for Pomodoro History with possibility for custom label
 - x Bug: Update Activity overwrite ActivityType
