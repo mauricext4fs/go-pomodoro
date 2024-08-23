@@ -29,6 +29,34 @@ func TestSQLiteRepository_StartActivity(t *testing.T) {
 		t.Error("invalid id sent back:", result.ID)
 	}
 }
+func TestSQLiteRepository_CountCompletedPomodoro(t *testing.T) {
+	a, err := testRepo.CountCompletedPomodoro()
+	if err != nil {
+		t.Error("count completed Pomodoro failed:", err)
+	}
+
+	if a != 0 {
+		t.Error("Count of Pomodoro is not 0!")
+	}
+
+	err = testRepo.UpdateActivity(1, Activities{
+		ID:             1,
+		ActivityType:   a,
+		StartTimestamp: time.Time{},
+		EndTimestamp:   time.Now(),
+	})
+	if err != nil {
+		t.Error("Failed to set EndTimestamp on Pomodoro ID=1")
+	}
+	a, err = testRepo.CountCompletedPomodoro()
+	if err != nil {
+		t.Error("count completed Pomodoro failed:", err)
+	}
+
+	if a != 1 {
+		t.Error("Count of Pomodoro is not 0!: ", a)
+	}
+}
 
 func TestSQLiteRepository_AllActivities(t *testing.T) {
 	a, err := testRepo.AllActivities()

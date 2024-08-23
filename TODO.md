@@ -7,7 +7,7 @@
 - x Add all DB logic for Pomodoro History with possibility for custom label
 - x Bug: Update Activity overwrite ActivityType
 - x Add Count of finish Pomodoro 
-- Add test for UpdateCountPomodoro
+- x Add test for UpdateCountPomodoro
 
 ## Version 7.1.0
 
