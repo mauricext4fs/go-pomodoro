@@ -119,8 +119,15 @@ func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			}
 
 			if p.App.Preferences().FloatWithFallback("withNotification", 0) == 1 {
-				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
-				app.New().SendNotification(n)
+				count, err := p.DB.CountCompletedPomodoro()
+				if err != nil {
+					n := fyne.NewNotification("🍅 finished!", "Another 🍅 completed. Congrats!")
+					app.New().SendNotification(n)
+				} else {
+					nMsg := fmt.Sprintf("%d 🍅 completed! Congrats!", count)
+					n := fyne.NewNotification("🍅 finished!", nMsg)
+					app.New().SendNotification(n)
+				}
 			}
 
 			p.Reset(win, "Go 🍅")
