@@ -118,7 +118,7 @@ func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 				PlayNotificationSound()
 			}
 
-			if p.App.Preferences().FloatWithFallback("withNotification", 1) == 1 {
+			if p.App.Preferences().FloatWithFallback("withNotification", 0) == 1 {
 				n := fyne.NewNotification("🍅 completed!", "🍅 completed!")
 				app.New().SendNotification(n)
 			}
