@@ -10,4 +10,19 @@ Make sure go/bin is in $PATH
 ```sh
 go install fyne.io/fyne/v2/cmd/fyne@latest
 make build 
+
+## Setup dev env for Windows 
+
+- Install msys2
+- pacman -Syu
+- pacman -Su
+- pacman -S mingw-w64-x86_64-gcc
+- pacman -S mingw-w64-x86_64-go
+- Add the following to shell profile: 
+```sh
+export GOROOT=/mingw64/lib/go
+export GOPATH=/mingw64
 ```
+
+End of Windows specific setup
+
