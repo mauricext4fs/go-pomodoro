@@ -13,6 +13,13 @@ build:
 	@## Removing the following line will crash the app when sound is enabled
 	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
 
+package_win:
+	rm -rf package_pom_win
+	mkdir -p package_pom_win
+	cp notification.wav package_pom_win/
+	cp Go\ Pomodoro.exe package_pom_win/
+	zip -r GoPomodoro.zip package_pom_win
+
 bundle:
 	@echo "Bundling ressource into bundled.go"
 	go generate
