@@ -18,6 +18,7 @@ make build
 - pacman -Su
 - pacman -S mingw-w64-x86_64-gcc
 - pacman -S mingw-w64-x86_64-go
+- pacman -S zip
 - Add the following to shell profile: 
 ```sh
 export GOROOT=/mingw64/lib/go

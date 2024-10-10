@@ -13,6 +13,9 @@
 
 - Find a way to use FyneApp info in Makefile
 - Investigate what is needed to make it work for iOS
+- Windows Build
+  - Need to "bundle" the .wav as it is not working when not present in the same directory
+    - Zip file?
 
 ## Version 8
 
