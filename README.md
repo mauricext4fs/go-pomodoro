@@ -2,6 +2,12 @@
 
 A simple Pomodoro GUI Application written in Go with the Fyne.io toolkit
 
+## Requirements
+
+### Windows 
+
+For Windows 10/11, OpenGL is required. You must activate 3d acceleration on VM or else Pomodoro won't start.
+
 ## Build
 
 Go version >= 1.23 is required
@@ -10,6 +16,7 @@ Make sure go/bin is in $PATH
 ```sh
 go install fyne.io/fyne/v2/cmd/fyne@latest
 make build 
+```
 
 ## Setup dev env for Windows 
 
@@ -20,6 +27,7 @@ make build
 - pacman -S mingw-w64-x86_64-go
 - pacman -S zip
 - Add the following to shell profile: 
+
 ```sh
 export GOROOT=/mingw64/lib/go
 export GOPATH=/mingw64
