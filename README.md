@@ -18,7 +18,7 @@ go install fyne.io/fyne/v2/cmd/fyne@latest
 make build 
 ```
 
-## Setup dev env for Windows 
+### Specific steps for Windows before build can be possible
 
 - Install msys2
 - pacman -Syu
@@ -29,9 +29,9 @@ make build
 - Add the following to shell profile: 
 
 ```sh
+PATH=$PATH:/mingw64/bin
 export GOROOT=/mingw64/lib/go
 export GOPATH=/mingw64
 ```
 
-End of Windows specific setup
 
