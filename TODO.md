@@ -8,14 +8,11 @@
 - x Bug: Update Activity overwrite ActivityType
 - x Add Count of finish Pomodoro 
 - x Add test for UpdateCountPomodoro
-
-## Version 7.1.0
-
-- Find a way to use FyneApp info in Makefile
-- Investigate what is needed to make it work for iOS
-- Windows Build
+- x Windows Build
   - Need to "bundle" the .wav as it is not working when not present in the same directory
     - Zip file?
+- Find a way to use FyneApp info in Makefile
+- Investigate what is needed to make it work for iOS
 
 ## Version 8
 
