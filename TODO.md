@@ -8,10 +8,12 @@
 - x Bug: Update Activity overwrite ActivityType
 - x Add Count of finish Pomodoro 
 - x Add test for UpdateCountPomodoro
+- x Try to make it work for Windows
 - x Windows Build
   - Need to "bundle" the .wav as it is not working when not present in the same directory
     - Zip file?
-- Find a way to use FyneApp info in Makefile
+- x Find a way to use FyneApp info in Makefile
+  Forget it... it's a nightmare and whatever janky solution it wont be cross-platform (windows, mac, linux)
 - Investigate what is needed to make it work for iOS
 
 ## Version 8
@@ -22,7 +24,6 @@
 - Add Clock Animation
 - Try harder to get some of the error thrown by AudioQueueObject.cpp away 
 - Try to make it work for Linux
-- Try to make it work for Windows
 
 ## Version 9
 
