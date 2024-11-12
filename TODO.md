@@ -14,7 +14,8 @@
     - Zip file?
 - x Find a way to use FyneApp info in Makefile
   Forget it... it's a nightmare and whatever janky solution it wont be cross-platform (windows, mac, linux)
-- Investigate what is needed to make it work for iOS
+- x Investigate what is needed to make it work for iOS
+  Need to change name... 
 
 ## Version 8
 
