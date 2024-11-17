@@ -1,10 +1,10 @@
-## Source from Trevor Sawler https://github.com/tsawler
+## Inspired by Trevor Sawler https://github.com/tsawler
 
 BINARY_NAME="Go Pomodoro.app"
 APP_NAME="Go Pomodoro"
 APP_ID="ch.mauricext4fs.gopomodoro"
-VERSION=6.0.0
-BUILD_NO=6
+VERSION=7.0.0
+BUILD_NO=7
 
 ## build: build binary and package app
 build:
@@ -12,6 +12,17 @@ build:
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -appID ${APP_ID}
 	@## Removing the following line will crash the app when sound is enabled
 	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
+
+build_win:
+	rm -rf Go\ Pomodoro.exe
+	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -appID ${APP_ID}
+
+package_win:
+	rm -rf package_w11x86
+	mkdir -p package_w11x86
+	cp notification.wav package_w11x86/
+	cp Go\ Pomodoro.exe package_w11x86/
+	zip -r GoPomodoro.zip package_w11x86/*
 
 bundle:
 	@echo "Bundling ressource into bundled.go"

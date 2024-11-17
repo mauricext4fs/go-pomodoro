@@ -1,7 +1,10 @@
 package main
 
 import (
+	"go-pomodoro/repository"
 	"image/color"
+	"log"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -14,13 +17,12 @@ import (
 
 type UIElements struct {
 	CountDownText            *CustomText
-	CountDownMinute          *CustomText
-	CountDownSecond          *CustomText
 	StartStopButton          *widget.Button
 	Start5MinuteBreakButton  *widget.Button
 	Start20MinuteBreakButton *widget.Button
 	ResetButton              *widget.Button
 	QuitButton               *widget.Button
+	PomodoroCountLabel       *widget.Label
 	SoundSliderLabel         *widget.Label
 	SoundSlider              *widget.Slider
 	NotificationSliderLabel  *widget.Label
@@ -59,6 +61,11 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
 	p.UIElements.StartStopButton = widget.NewButton("Start 🍅", func() {
 		if p.Stop {
+			result, err := p.DB.StartActivity(repository.Activities{ActivityType: 100, StartTimestamp: time.Now()})
+			if err != nil {
+				log.Fatal("Error adding activity to sqlite DB: ", err)
+			}
+			p.ID = result.ID
 			fyne.Window.SetTitle(p.MainWindow, "Go 🍅: Pomodoro running")
 			p.UpdateStartStopButton("", true)
 			p.Stop = false
@@ -70,6 +77,12 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		}
 	})
 	p.UIElements.Start5MinuteBreakButton = widget.NewButton("Start 5 Minutes Break", func() {
+		result, err := p.DB.StartActivity(repository.Activities{ActivityType: 200, StartTimestamp: time.Now()})
+		if err != nil {
+			log.Fatal("Error adding activity to sqlite DB: ", err)
+		}
+		p.ID = result.ID
+
 		p.Reset(p.MainWindow, "Go 🍅: 5 Minutes pause running")
 		p.Countdown.Minute = 5
 		p.Countdown.Second = 0
@@ -78,6 +91,11 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		go p.Animate(content, p.MainWindow)
 	})
 	p.UIElements.Start20MinuteBreakButton = widget.NewButton("Start 20 Minutes Break", func() {
+		result, err := p.DB.StartActivity(repository.Activities{ActivityType: 500, StartTimestamp: time.Now()})
+		if err != nil {
+			log.Fatal("Error adding activity to sqlite DB: ", err)
+		}
+		p.ID = result.ID
 		p.Reset(p.MainWindow, "Go 🍅: 20 Minutes pause running")
 		p.Countdown.Minute = 20
 		p.Countdown.Second = 00
@@ -91,6 +109,9 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 	p.UIElements.QuitButton = widget.NewButton("Quit ", func() {
 		p.App.Quit()
 	})
+
+	p.UIElements.PomodoroCountLabel = widget.NewLabelWithStyle("Completed Pomodoro: 0", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	p.UpdatePomodoroCount()
 
 	p.UIElements.SoundSliderLabel = widget.NewLabelWithStyle("Sound:", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 	p.UIElements.SoundSlider = widget.NewSlider(0, 1)
@@ -108,6 +129,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 	content.Add(p.UIElements.QuitButton)
 
 	content.Add(layout.NewSpacer())
+	content.Add(p.UIElements.PomodoroCountLabel)
 	content.Add(container.New(
 		layout.NewGridLayout(2),
 		p.UIElements.SoundSliderLabel,

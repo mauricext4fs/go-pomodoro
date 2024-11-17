@@ -1,42 +1,32 @@
 # TODO
 
-## Version 6
+## Version 7
 
-- x Start Apple dev process to get App store build
-- x Export Apple dev keychain to Macbook Air
-- x v6 icon 
-- x Update Makefile for v6
-- x Try to get the countdown font bigger
-- x Investigate and add fyne asset bundling logic so the DMG will not crash
-- x Remove dmg from Version 5 as it crash everywhere
-- x Replace color of Countdown text to the same as fyne.important
-- x BUG: dmg Notification crash app
-- x BUG: Notification still make the app crash on Intel
-- x !!! Refactor playNotificationSound: 
-    Not going to do it... beep lib does not make it easy at all to do this right.
-- x Resample the notification sound (maybe that will lower the amount of debug output)
-- x BUG: Name of binary in build dmg is wrong
-- x Find how to enable notification in dmg (notarytool)
-- x Migrate build.sh to use notarytool instead of altool
-- x BUG: dmg Sound crash app (stupidly... the .wav must still be packed in the .app dir)
-- x BUG: Notification icon is incorrect
-- x BUG: Sometime the app just close by itself without crash report
-			 This seems to happened often after the end of a Pomodoro (on notification). 
-			 Seems to have gotten especially worse since adding the systray icon. 
-- x Create .env and get build.sh in git (without the sensitive info)
+- x Default Notification = Off
+- x Improve Notification msg
+- x Add all DB logic for Pomodoro History with possibility for custom label
+- x Bug: Update Activity overwrite ActivityType
+- x Add Count of finish Pomodoro 
+- x Add test for UpdateCountPomodoro
+- x Try to make it work for Windows
+- x Windows Build
+  - Need to "bundle" the .wav as it is not working when not present in the same directory
+    - Zip file?
+- x Find a way to use FyneApp info in Makefile
+  Forget it... it's a nightmare and whatever janky solution it wont be cross-platform (windows, mac, linux)
+- x Investigate what is needed to make it work for iOS
+  Need to change name... 
 
-## Version 7 / 8
+## Version 8
 
-- Find a way to use FyneApp info in Makefile
-- Improve Notification msg
-- Add counter for completed Pomodoro
-- Add "About" item in menu
+- Add History with custom label (work, study, etc...)
+- Add logger (would hopefully help with the Audio trash log)
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
-- Investigate what is need to make it work for iOS
 - Add Clock Animation
 - Try harder to get some of the error thrown by AudioQueueObject.cpp away 
 - Try to make it work for Linux
-- Try to make it work for Windows
-- Add History with custom label (work, study, etc...)
+
+## Version 9
+
 - BUG: 0 Second missing
 
