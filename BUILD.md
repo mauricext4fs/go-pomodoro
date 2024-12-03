@@ -24,4 +24,12 @@ export GOROOT=/mingw64/lib/go
 export GOPATH=/mingw64
 ```
 
+## Specific requirements for Linux
+
+- mesa-libGL-devel
+- alsa-lib-devel
+- glfw-devel
+- libXxf86vm-devel
+
+
 
