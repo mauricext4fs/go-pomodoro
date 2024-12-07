@@ -9,6 +9,9 @@
 - Fix: UTF-8 char in Title not showing properly on Linux
 - Fix: Sound crash with Linux Install (the sound file is not copied and packaged)
 - Notification UTF char not showing properly on linux
+- Fix: 2024/12/07 16:00:11 Fyne error:  Preferences API requires a unique ID, use app.NewWithID() or the FyneApp.toml ID field
+2024/12/07 16:00:11   At: /home/mcourtois/go/pkg/mod/fyne.io/fyne/v2@v2.4.4/app/app.go:60
+
 
 ## Version 9
 
