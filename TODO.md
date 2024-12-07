@@ -5,7 +5,10 @@
 - Add version in title /| menu
 - Add logger (would hopefully help with the Audio trash log)
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
-- Try to make it work for Linux
+- x Try to make it work for Linux
+- Fix: UTF-8 char in Title not showing properly on Linux
+- Fix: Sound crash with Linux Install (the sound file is not copied and packaged)
+- Notification UTF char not showing properly on linux
 
 ## Version 9
 
