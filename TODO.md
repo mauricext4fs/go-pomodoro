@@ -2,6 +2,7 @@
 
 ## Version 8
 
+- Add logic for linux Build
 - Add version in title /| menu
 - Add logger (would hopefully help with the Audio trash log)
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
