@@ -66,7 +66,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 				log.Fatal("Error adding activity to sqlite DB: ", err)
 			}
 			p.ID = result.ID
-			fyne.Window.SetTitle(p.MainWindow, "Go 🍅: Pomodoro running")
+			fyne.Window.SetTitle(p.MainWindow, "Go ፅ Pomodoro running")
 			p.UpdateStartStopButton("", true)
 			p.Stop = false
 			go p.Animate(content, p.MainWindow)
