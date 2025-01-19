@@ -2,14 +2,16 @@
 
 ## Version 8
 
+- Update Build Nr and Icon
 - Add logic for linux Build
   - Add target logic in Makefile
   - Conditional build with target?
 - Add version in title /| menu
+- Change "Minutes and " for ":"??
 - Add logger (would hopefully help with the Audio trash log)
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
 - x Try to make it work for Linux
-- Fix: UTF-8 char in Title not showing properly on Linux
+- x Fix: UTF-8 char in Title not showing properly on Linux
 - Notification UTF char not showing properly on linux
 - Fix: Sound crash with Linux Install (the sound file is not copied and packaged)
     - It search for 'notification.wav' in the "working" path
