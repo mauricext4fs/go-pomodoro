@@ -54,9 +54,18 @@ BUILD_NO=8
 ## build: build binary and package app
 build:
 ifeq ($(OSNAME),OSX)
-	echo "OSX"
-	(make build_mac)
+	@echo "OSX"
+	@(make build_mac)
 endif
+ifeq ($(OSNAME),WIN)
+	@echo "WINDOWS"
+	@(make build_win)
+endif
+ifeq ($(OSNAME),Linux)
+	@echo "Linux"
+	@(make build_linux)
+endif
+	@echo "Build Completed"
 
 build_mac:
 	rm -rf ${BINARY_NAME}
