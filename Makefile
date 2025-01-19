@@ -24,7 +24,7 @@ else
 		OSNAME = OSX
 		OSFLAG += -D OSX
 	endif
-		UNAME_P := $(shell uname -p)
+	UNAME_P := $(shell uname -m)
 	ifeq ($(UNAME_P),x86_64)
 		OSFLAG += -D AMD64
 		OSARCH = AMD64
