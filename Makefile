@@ -63,7 +63,7 @@ ifeq ($(OSNAME),WIN)
 endif
 ifeq ($(OSNAME),Linux)
 	@echo "Linux"
-	@(make build_linux)
+	@(make build_nux)
 endif
 	@echo "Build Completed"
 
