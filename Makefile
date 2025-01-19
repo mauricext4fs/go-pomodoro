@@ -53,6 +53,12 @@ BUILD_NO=8
 
 ## build: build binary and package app
 build:
+ifeq ($(OSNAME),OSX)
+	echo "OSX"
+	(make build_mac)
+endif
+
+build_mac:
 	rm -rf ${BINARY_NAME}
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -appID ${APP_ID}
 	@## Removing the following line will crash the app when sound is enabled
