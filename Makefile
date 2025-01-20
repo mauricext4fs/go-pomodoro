@@ -65,7 +65,7 @@ ifeq ($(OSNAME),Linux)
 	@echo "Linux"
 	@(make build_nux)
 endif
-	@echo "Build Completed"
+	@echo " "
 
 build_mac:
 	rm -rf ${BINARY_NAME}
@@ -116,4 +116,5 @@ clean:
 
 ## test: runs all tests
 test:
+	mkdir -p repository/testdata
 	go test -v ./...
