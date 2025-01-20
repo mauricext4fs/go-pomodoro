@@ -2,6 +2,7 @@
 
 ## Version 8
 
+- Fix make test is broken!
 - Update Build Nr and Icon
 - Add logic for linux Build
   - Add target logic in Makefile
