@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"fyne.io/fyne/v2/storage"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/speaker"
 	"github.com/gopxl/beep/wav"
@@ -13,6 +14,8 @@ import (
 func PlayNotificationSound() {
 	// Assignment is required otherwise no conversion is made in os.Open
 	notificationSound := resourceNotificationWav.StaticName
+	vlad := storage.NewFileURI(resourceNotificationWav.StaticName)
+	log.Fatalln(vlad.Path())
 	f, err := os.Open(notificationSound)
 	if err != nil {
 		log.Fatal("Error: ", err)

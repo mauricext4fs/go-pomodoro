@@ -74,6 +74,7 @@ func main() {
 
 	p.MainWindow.SetContent(c)
 	p.MainWindow.ShowAndRun()
+
 }
 
 func (p *Pomodoro) Reset(win fyne.Window, newTitle string) {
@@ -84,6 +85,7 @@ func (p *Pomodoro) Reset(win fyne.Window, newTitle string) {
 	p.Countdown.Second = 59
 	p.UIElements.CountDownText.UpdateText("25 Minutes")
 
+	PlayNotificationSound()
 	p.UpdateStartStopButton("Start 🍅", false)
 	if win != nil && newTitle != "" {
 		fyne.Window.SetTitle(win, newTitle)
