@@ -67,9 +67,6 @@ pushd "${APP_NAME}"
 # remove any existing extended attributes from new app:
 xattr -rc "${APP_NAME}.app"
 
-# Add wav manually to the package as it will crash otherwise
-cp ../../notification.wav Go\ Pomodoro.app/Contents/Resources
-
 # Add a link for /Applications in the Directory, more covenient when becomes a .dmg:
 ln -s /Applications Applications
 

@@ -71,13 +71,11 @@ build_mac:
 	rm -rf ${BINARY_NAME}
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -appID ${APP_ID}
 	@## Removing the following line will crash the app when sound is enabled
-	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
 
 build_nux:
 	rm -rf ${BINARY_NAME}
 	fyne package -appVersion ${VERSION} -appBuild ${BUILD_NO} -appID ${APP_ID}
 	@## Removing the following line will crash the app when sound is enabled
-	cp notification.wav Go\ Pomodoro.app/Contents/Resources/
 
 build_win:
 	rm -rf Go\ Pomodoro.exe
@@ -86,7 +84,6 @@ build_win:
 package_win:
 	rm -rf package_w11x86
 	mkdir -p package_w11x86
-	cp notification.wav package_w11x86/
 	cp Go\ Pomodoro.exe package_w11x86/
 	zip -r GoPomodoro.zip package_w11x86/*
 
@@ -118,3 +115,4 @@ clean:
 test:
 	mkdir -p repository/testdata
 	go test -v ./...
+
