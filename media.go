@@ -1,26 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"log"
-	"os"
 	"time"
 
-	"fyne.io/fyne/v2/storage"
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/speaker"
 	"github.com/gopxl/beep/wav"
 )
 
 func PlayNotificationSound() {
-	// Assignment is required otherwise no conversion is made in os.Open
-	notificationSound := resourceNotificationWav.StaticName
-	vlad := storage.NewFileURI(resourceNotificationWav.StaticName)
-	log.Fatalln(vlad.Path())
-	f, err := os.Open(notificationSound)
-	if err != nil {
-		log.Fatal("Error: ", err)
-	}
-	streamer, format, err := wav.Decode(f)
+	nA := bytes.NewReader(resourceNotificationWav.Content())
+	streamer, format, err := wav.Decode(nA)
+
 	if err != nil {
 		log.Fatal(err)
 	}
