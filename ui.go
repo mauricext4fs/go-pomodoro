@@ -59,19 +59,19 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 
 	content := p.Render()
 
-	p.UIElements.StartStopButton = widget.NewButton("Start ፅ", func() {
+	p.UIElements.StartStopButton = widget.NewButton("Start 🍅", func() {
 		if p.Stop {
 			result, err := p.DB.StartActivity(repository.Activities{ActivityType: 100, StartTimestamp: time.Now()})
 			if err != nil {
 				log.Fatal("Error adding activity to sqlite DB: ", err)
 			}
 			p.ID = result.ID
-			fyne.Window.SetTitle(p.MainWindow, "Go ፅ Pomodoro running")
+			fyne.Window.SetTitle(p.MainWindow, "Pomodoro running")
 			p.UpdateStartStopButton("", true)
 			p.Stop = false
 			go p.Animate(content, p.MainWindow)
 		} else {
-			fyne.Window.SetTitle(p.MainWindow, "Go ፅ Paused")
+			fyne.Window.SetTitle(p.MainWindow, "Pomodoro paused")
 			p.UpdateStartStopButton("Continue", false)
 			p.Stop = true
 		}
@@ -83,7 +83,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		}
 		p.ID = result.ID
 
-		p.Reset(p.MainWindow, "Go ፅ 5 Minutes pause running")
+		p.Reset(p.MainWindow, "5 Minutes pause running")
 		p.Countdown.Minute = 5
 		p.Countdown.Second = 0
 		p.UpdateStartStopButton("", true)
@@ -96,7 +96,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 			log.Fatal("Error adding activity to sqlite DB: ", err)
 		}
 		p.ID = result.ID
-		p.Reset(p.MainWindow, "Go ፅ 20 Minutes pause running")
+		p.Reset(p.MainWindow, "20 Minutes pause running")
 		p.Countdown.Minute = 20
 		p.Countdown.Second = 00
 		p.UpdateStartStopButton("", true)
@@ -104,7 +104,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		go p.Animate(content, p.MainWindow)
 	})
 	p.UIElements.ResetButton = widget.NewButton("Reset ", func() {
-		p.Reset(p.MainWindow, "Go ፅ")
+		p.Reset(p.MainWindow, "Go 🍅")
 	})
 	p.UIElements.QuitButton = widget.NewButton("Quit ", func() {
 		p.App.Quit()
@@ -137,7 +137,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		p.UIElements.SoundSlider,
 		p.UIElements.NotificationSlider))
 
-	p.Reset(p.MainWindow, "Go ፅ")
+	p.Reset(p.MainWindow, "Go 🍅")
 
 	return content
 
@@ -148,8 +148,13 @@ func (p *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
 		p.UIElements.StartStopButton.SetIcon(theme.MediaPauseIcon())
 	} else {
 		p.UIElements.StartStopButton.SetIcon(nil)
+
 	}
-	p.UIElements.StartStopButton.SetText(msg)
+	if msg == "Continue" {
+		p.UIElements.StartStopButton.SetIcon(theme.MediaPlayIcon())
+	} else {
+		p.UIElements.StartStopButton.SetText(msg)
+	}
 }
 
 func (p *Pomodoro) Render() *fyne.Container {
