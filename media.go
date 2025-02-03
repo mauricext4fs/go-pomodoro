@@ -11,15 +11,18 @@ import (
 )
 
 func PlayNotificationSound() {
-	nA := bytes.NewReader(resourceNotificationWav.Content())
-	streamer, format, err := wav.Decode(nA)
-
+	wR := bytes.NewReader(resourceNotificationWav.Content())
+	streamer, format, err := wav.Decode(wR)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer streamer.Close()
 
-	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+	defer streamer.Close()
+	err = speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+	if err != nil {
+		log.Fatalf("Failed to init speaker: %v", err)
+	}
+
 	done := make(chan bool)
 	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
 		done <- true
