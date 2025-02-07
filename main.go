@@ -106,7 +106,7 @@ func (p *Pomodoro) Animate(co fyne.CanvasObject, win fyne.Window) {
 			p.Layout(nil, co.Size())
 			<-tick.C
 			p.CountdownDown()
-			p.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d Minutes and %d Seconds", p.Countdown.Minute, p.Countdown.Second))
+			p.UIElements.CountDownText.UpdateText(fmt.Sprintf("%d : %d", p.Countdown.Minute, p.Countdown.Second))
 		}
 		if p.Countdown.Minute == 0 && p.Countdown.Second == 0 {
 			err := p.DB.UpdateActivity(p.ID, repository.Activities{ID: p.ID, EndTimestamp: time.Now()})
