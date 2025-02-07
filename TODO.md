@@ -2,14 +2,14 @@
 
 ## Version 8
 
-- Change "Minutes and " for ":"??
-- Add version in title /| menu
+- Add version in menu
 - Add logger (would hopefully help with the Audio trash log)
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
 - Notification crash on Linux i3
 - Fix: 2024/12/07 16:00:11 Fyne error:  Preferences API requires a unique ID, use app.NewWithID() or the FyneApp.toml ID field
 2024/12/07 16:00:11   At: /home/mcourtois/go/pkg/mod/fyne.io/fyne/v2@v2.4.4/app/app.go:60
 - Makefile Conditional build with target?
+- x Change "Minutes and " for ":"??
 - x Fix make test is broken!
 - x Notification UTF char not showing properly on linux (suck on it... not going to fix it!)
 - x Update Build Nr and Icon

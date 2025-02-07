@@ -83,7 +83,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		}
 		p.ID = result.ID
 
-		p.Reset(p.MainWindow, "5 Minutes pause running")
+		p.Reset(p.MainWindow, "Pause running")
 		p.Countdown.Minute = 5
 		p.Countdown.Second = 0
 		p.UpdateStartStopButton("", true)
@@ -96,7 +96,7 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 			log.Fatal("Error adding activity to sqlite DB: ", err)
 		}
 		p.ID = result.ID
-		p.Reset(p.MainWindow, "20 Minutes pause running")
+		p.Reset(p.MainWindow, "Pause running")
 		p.Countdown.Minute = 20
 		p.Countdown.Second = 00
 		p.UpdateStartStopButton("", true)
