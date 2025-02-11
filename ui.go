@@ -10,6 +10,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
@@ -137,10 +138,23 @@ func (p *Pomodoro) Show(stack *fyne.Container) fyne.CanvasObject {
 		p.UIElements.SoundSlider,
 		p.UIElements.NotificationSlider))
 
+	p.ShowMenu()
 	p.Reset(p.MainWindow, "Go 🍅")
 
 	return content
 
+}
+
+func (p *Pomodoro) ShowMenu() {
+	aboutMenuItem := fyne.NewMenuItem("About", p.openAboutWin(p.MainWindow))
+	fileMenu := fyne.NewMenu("Help", aboutMenuItem)
+	p.MainWindow.SetMainMenu(fyne.NewMainMenu(fileMenu))
+}
+
+func (p *Pomodoro) openAboutWin(win fyne.Window) func() {
+	return func() {
+		dialog.ShowInformation("About", "Yolo", win)
+	}
 }
 
 func (p *Pomodoro) UpdateStartStopButton(msg string, withPauseIcon bool) {
