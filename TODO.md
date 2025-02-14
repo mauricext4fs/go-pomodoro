@@ -2,6 +2,7 @@
 
 ## Version 8
 
+- Investigate sound crash on m1 mac
 - Add version in menu
 - Add logger (would hopefully help with the Audio trash log)
 - Add Linux specific block to FyneApp.toml
