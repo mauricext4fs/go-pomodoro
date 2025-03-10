@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -12,7 +11,7 @@ import (
 	"github.com/gopxl/beep/wav"
 )
 
-func createTmpWaveFile(wave []byte) {
+func createTmpWaveFile(wave []byte) *os.File {
 	f, err := os.CreateTemp("", "pomodoro_sound")
 	if err != nil {
 		log.Fatalln("Could not create a temporary file: ", err)
@@ -26,12 +25,14 @@ func createTmpWaveFile(wave []byte) {
 	if err != nil {
 		log.Fatalln("Could not write to temporary file: ", f.Name())
 	}
+
+	return f
 }
 
 func PlayNotificationSound() {
-	wR := bytes.NewReader(resourceNotificationWav.Content())
-	createTmpWaveFile(resourceNotificationWav.Content())
-	streamer, format, err := wav.Decode(wR)
+	//wR := bytes.NewReader(resourceNotificationWav.Content())
+	file := createTmpWaveFile(resourceNotificationWav.Content())
+	streamer, format, err := wav.Decode(file)
 	if err != nil {
 		log.Fatal(err)
 	}
