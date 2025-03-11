@@ -3,6 +3,12 @@
 ## Version 8
 
 - Investigate sound crash on m1 mac
+  - Happened when the sound is mute (for now it always happenned the second time when mute)
+  - It also happened on Intel Mac
+  - Also happened on Windows
+  - It also happened without muting the sound
+  - Happenning with 2x Pomodoro as well
+	(Failed to init speaker: speaker cannot be initialized more than once)
 - Add version in menu
 - Add logger (would hopefully help with the Audio trash log)
 - Add Linux specific block to FyneApp.toml
