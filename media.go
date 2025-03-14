@@ -19,11 +19,16 @@ func createTmpWaveFile(wave []byte) *os.File {
 
 	fmt.Println("Temp file name: ", f.Name())
 
-	defer os.Remove(f.Name())
+	//defer os.Remove(f.Name())
 
-	_, err = f.Write(wave)
+	numBytes := 0
+	numBytes, err = f.Write(wave)
 	if err != nil {
 		log.Fatalln("Could not write to temporary file: ", f.Name())
+	}
+
+	if numBytes <= 1 {
+		log.Fatalln("Oupss... nothing written to the temp wave file")
 	}
 
 	return f
@@ -32,9 +37,11 @@ func createTmpWaveFile(wave []byte) *os.File {
 func PlayNotificationSound() {
 	//wR := bytes.NewReader(resourceNotificationWav.Content())
 	file := createTmpWaveFile(resourceNotificationWav.Content())
+	file.Seek(0, 0)
+
 	streamer, format, err := wav.Decode(file)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("37: ", err)
 	}
 
 	defer streamer.Close()
