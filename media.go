@@ -19,10 +19,9 @@ func createTmpWaveFile(wave []byte) *os.File {
 
 	fmt.Println("Temp file name: ", f.Name())
 
-	//defer os.Remove(f.Name())
-
 	numBytes := 0
 	numBytes, err = f.Write(wave)
+
 	if err != nil {
 		log.Fatalln("Could not write to temporary file: ", f.Name())
 	}
@@ -35,24 +34,26 @@ func createTmpWaveFile(wave []byte) *os.File {
 }
 
 func PlayNotificationSound() {
-	//wR := bytes.NewReader(resourceNotificationWav.Content())
-	file := createTmpWaveFile(resourceNotificationWav.Content())
-	file.Seek(0, 0)
+	f := createTmpWaveFile(resourceNotificationWav.Content())
+	file, err := os.Open(f.Name())
+	if err != nil {
+		log.Fatalln("Temp wave file could not be open! ", err)
+	}
+
+	defer f.Close()
 
 	streamer, format, err := wav.Decode(file)
 	if err != nil {
-		log.Fatal("37: ", err)
+		log.Fatal("Wav decode error: ", err)
 	}
-
 	defer streamer.Close()
-	err = speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
-	if err != nil {
-		log.Fatalf("Failed to init speaker: %v", err)
-	}
 
+	log.Println("Start playing Notification audio")
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
 	done := make(chan bool)
 	speaker.Play(beep.Seq(streamer, beep.Callback(func() {
 		done <- true
 	})))
 	<-done
+	log.Println("Finish playing Notification audio")
 }
