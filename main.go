@@ -51,7 +51,7 @@ func main() {
 
 	// Window
 	p.MainWindow = a.NewWindow("Go 🍅")
-	p.MainWindow.Resize(fyne.Size{Width: 290, Height: 350})
+	p.MainWindow.Resize(fyne.Size{Width: 310, Height: 350})
 	p.MainWindow.CenterOnScreen()
 	p.MainWindow.SetMaster()
 
