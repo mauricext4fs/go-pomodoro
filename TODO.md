@@ -2,7 +2,7 @@
 
 ## Version 8
 
-- Add version in menu
+- Increase the default with of the App as to fit all the content of Infobox
 - Add logger (would hopefully help with the Audio trash log)
 - Add Linux specific block to FyneApp.toml
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
@@ -10,6 +10,7 @@
 - Fix: 2024/12/07 16:00:11 Fyne error:  Preferences API requires a unique ID, use app.NewWithID() or the FyneApp.toml ID field
 2024/12/07 16:00:11   At: /home/mcourtois/go/pkg/mod/fyne.io/fyne/v2@v2.4.4/app/app.go:60
 - Makefile Conditional build with target?
+- x Add version in menu
 - x Fix sound crashing on second notification
   - Issue was related to not ignoring error return by speaker.Init which must be ignored in case of multiple called
   - Sound now works properly on Linux

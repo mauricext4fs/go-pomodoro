@@ -153,7 +153,8 @@ func (p *Pomodoro) ShowMenu() {
 
 func (p *Pomodoro) openAboutWin(win fyne.Window) func() {
 	return func() {
-		info := "Version: " + fyne.CurrentApp().Metadata().Version
+		info := "\n\n\n"
+		info += "Version: " + fyne.CurrentApp().Metadata().Version
 		info += "\nAuthor: Maurice Courtois"
 		info += "\nhttps://github.com/mauricext4fs"
 		info += "\nLicense: BSD-3"
