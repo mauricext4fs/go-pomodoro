@@ -5,4 +5,11 @@ Website = "https://github.com/mauricext4fs/go-pomodoro"
   Name = "Go Pomodoro"
   ID = "ch.mauricext4fs.gopomodoro"
   Version = "8.0.0"
-  Build = 168
+  Build = 170
+
+[LinuxAndBSD]
+  GenericName = "Pomodoro"
+  Categories = ["Productivity"]
+  Comment = "Get more productive by using a counter to remind you to take a brake"
+  Keywords = ["Pomodoro", "Counter"]
+  ExecParams = "-x 42"
