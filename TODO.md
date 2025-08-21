@@ -2,6 +2,9 @@
 
 ## Version 8
 
+- Increase the default width of the App as to fit all the content of Infobox
+  - On Windows the app resize itself automatically to the with of components which is too small to fit the Infobox.
+
 - Add logger (would hopefully help with the Audio trash log)
 - Add Linux specific block to FyneApp.toml
 - Switch to Data Binding for the countdown: https://docs.fyne.io/explore/binding
@@ -9,11 +12,9 @@
 - Fix: 2024/12/07 16:00:11 Fyne error:  Preferences API requires a unique ID, use app.NewWithID() or the FyneApp.toml ID field
 2024/12/07 16:00:11   At: /home/mcourtois/go/pkg/mod/fyne.io/fyne/v2@v2.4.4/app/app.go:60
 - Makefile Conditional build with target?
-- x Increase the default with of the App as to fit all the content of Infobox
 - x Add version in menu
 - x Fix sound crashing on second notification
-  - Issue was related to not ignoring error return by speaker.Init which must be ignored in case of multiple called
-  - Sound now works properly on Linux
+    Issue was related to not ignoring error return by speaker.Init which must be ignored in case of multiple called
 - x Change "Minutes and " for ":"??
 - x Fix make test is broken!
 - x Notification UTF char not showing properly on linux (suck on it... not going to fix it!)
@@ -30,6 +31,7 @@
 
 ## Version 9
 
+- Add timer into the mac taskbar... maybe
 - Add custom label (work, study, etc...)
 - BUG: 0 Second missing
 - Add Clock Animation
