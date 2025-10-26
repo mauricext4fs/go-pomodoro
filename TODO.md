@@ -31,6 +31,7 @@
 
 ## Version 9
 
+- Maybe? Add possibility to adjust a custom volume of the notification 
 - Add timer into the mac taskbar... maybe
 - Add custom label (work, study, etc...)
 - BUG: 0 Second missing
